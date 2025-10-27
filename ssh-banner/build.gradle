@@ -1,0 +1,29 @@
+version = '1.0.0'
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        resources.srcDirs = ['resources']
+    }
+}
+
+task fatJar(type: Jar) {
+    dependsOn check
+    from {
+        configurations.runtimeClasspath.collect {
+            (it.isDirectory() ? it : zipTree(it)).matching {
+                exclude('META-INF/versions/**')
+                exclude('META-INF/maven/**')
+                exclude('META-INF/proguard/**') // not currently used, see https://github.com/Guardsquare/proguard/issues/337
+                exclude('META-INF/LICENSE*')
+            }
+        }
+    }
+    manifest {
+        attributes 'IPScan-Plugin' : 'SSHBannerFetcher'
+    }
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    includeEmptyDirs = false
+    archiveClassifier = 'all-in-one'
+    with jar
+}

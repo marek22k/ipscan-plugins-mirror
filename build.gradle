@@ -3,46 +3,21 @@ plugins {
     id 'org.gradlex.reproducible-builds' version '1.0'
 }
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.gradlex.reproducible-builds'
 
-dependencies {
-    compileOnly files('libs/ipscan-any-3.9.2.jar')
-}
-
-version = '1.0.0'
-
-sourceSets {
-    main {
-        java.srcDirs = ['src']
-        resources.srcDirs = ['resources']
+    repositories {
+        mavenCentral()
     }
-}
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of 21
+    dependencies {
+        compileOnly files("${rootProject.projectDir}/libs/ipscan-any-3.9.2.jar")
     }
-}
 
-task fatJar(type: Jar) {
-    dependsOn check
-    from {
-        configurations.runtimeClasspath.collect {
-            (it.isDirectory() ? it : zipTree(it)).matching {
-                exclude('META-INF/versions/**')
-                exclude('META-INF/maven/**')
-                exclude('META-INF/proguard/**') // not currently used, see https://github.com/Guardsquare/proguard/issues/337
-                exclude('META-INF/LICENSE*')
-            }
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of 21
         }
     }
-    manifest {
-        attributes 'IPScan-Plugin' : 'SSHBannerFetcher'
-    }
-    duplicatesStrategy = DuplicatesStrategy.FAIL
-    includeEmptyDirs = false
-    archiveClassifier = 'all-in-one'
-    with jar
 }
