@@ -1,2 +1,2 @@
-# ipscan-plugins
+# ipscan-plugin-ssh-banner
 
