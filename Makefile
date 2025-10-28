@@ -14,7 +14,7 @@ check:
 	./gradlew check
 
 checkdependencies:
-	./gradlew dependencyUpdates
+	./gradlew dependencyUpdates --refresh-dependencies
 
 docs:
 	./gradlew javadoc
