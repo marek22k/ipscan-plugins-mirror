@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: Copyright (C) 2025 Marek Küthe <m.k@mk16.de>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+when:
+  - event: manual
+    branch: main
+  - event: push
+    branch: main
+
+steps:
+  - name: build
+    image: codeberg.org/mark22k/ci:latest
+    pull: true
+    commands:
+      - make
