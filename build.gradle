@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'pmd'
     id 'org.gradlex.reproducible-builds' version '1.0'
     id 'io.github.sgtsilvio.gradle.proguard' version '0.7.0'
     id 'com.diffplug.spotless' version '8.0.0'
@@ -63,6 +64,12 @@ subprojects {
                 .sortMembersVisibilityOrder("B,R,D,V")
                 .configFile("${rootProject.projectDir}/eclipse-jdt.xml")
         }
+    }
+
+    pmd {
+        consoleOutput = true
+        toolVersion = '7.8.0'
+        ruleSetFiles = files 'pmd.xml'
     }
 
     spotbugs {
