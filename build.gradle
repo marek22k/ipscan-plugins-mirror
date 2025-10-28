@@ -25,6 +25,7 @@ subprojects {
         spotbugs 'com.github.spotbugs:spotbugs:4.8.6'
         spotbugsPlugins 'com.mebigfatguy.fb-contrib:fb-contrib:7.6.8'
 
+        compileOnly 'com.github.spotbugs:spotbugs-annotations:4.8.6'
         compileOnly files("${rootProject.projectDir}/libs/ipscan-any-3.9.2.jar")
     }
 
@@ -61,8 +62,6 @@ subprojects {
                 .sortMembersVisibilityOrderEnabled(true)
                 .sortMembersVisibilityOrder("B,R,D,V")
                 .configFile("${rootProject.projectDir}/eclipse-jdt.xml")
-
-            formatAnnotations()
         }
     }
 
