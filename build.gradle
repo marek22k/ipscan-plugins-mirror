@@ -65,7 +65,7 @@ subprojects {
             endWithNewline()
         }
         java {
-            importOrder('edu.umd.cs.findbugs.annotations', 'java', 'net.azib.ipscan');
+            importOrder('\\#', 'edu.umd.cs.findbugs.annotations', 'java', 'net.azib.ipscan');
 
             removeUnusedImports()
             forbidWildcardImports()
