@@ -159,6 +159,7 @@ subprojects {
         }
 
         jdkModules.add 'java.base'
+        jdkModules.add 'java.logging'
 
         rulesFiles.from file("${rootProject.projectDir}/ipscan-plugins.pro")
     }

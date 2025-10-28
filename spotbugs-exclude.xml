@@ -18,6 +18,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
             <Bug pattern="CT_CONSTRUCTOR_THROW" />
             <Bug pattern="LG_LOST_LOGGER_DUE_TO_WEAK_REFERENCE" />
             <Bug pattern="CC_CYCLOMATIC_COMPLEXITY" />
+            <Bug pattern="IMC_IMMATURE_CLASS_NO_TOSTRING" />
         </Or>
     </Match>
 </FindBugsFilter>
