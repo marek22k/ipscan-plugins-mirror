@@ -72,6 +72,10 @@ subprojects {
     }
 
     jar {
+        enabled = false
+    }
+
+    task fatJar(type: Jar) {
         dependsOn check
         from {
             configurations.runtimeClasspath.collect {
@@ -85,14 +89,19 @@ subprojects {
         }
         duplicatesStrategy = DuplicatesStrategy.FAIL
         includeEmptyDirs = false
+        archiveClassifier = 'fatjar'
+        with jar
     }
 
     task proguardedJar(type: io.github.sgtsilvio.gradle.proguard.ProguardTask) {
+        dependsOn fatJar
         addInput {
-            classpath.from(tasks.jar)
+            classpath.from(tasks.fatJar)
         }
         addOutput {
-            archiveFile.set(base.libsDirectory.file("${project.name}-${project.version}-proguarded.jar"))
+            archiveFile.set(project.layout.buildDirectory.file(
+                project.provider { "libs/${project.name}-${project.version}.jar" }
+            ))
         }
         addLibrary {
             classpath.from(configurations.compileClasspath)

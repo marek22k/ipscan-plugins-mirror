@@ -4,7 +4,7 @@ ext {
     pluginClass = 'bandura.ipscan.plugins.SSHBannerFetcher'
 }
 
-jar {
+fatJar {
     manifest {
         attributes 'IPScan-Plugin' : pluginClass
     }
