@@ -4,7 +4,7 @@
 
 MAKEFLAGS := -j1
 
-.PHONY: all fatJar proguardedJar check checkdependencies docs clean
+.PHONY: all fatJar proguardedJar check checkdependencies docs clean lizard reuse-annotate reuse-download reuse-lint reuse-fix reuse
 
 all: check proguardedJar
 
@@ -25,3 +25,19 @@ docs:
 
 clean:
 	./gradlew clean
+
+lizard:
+	./gradlew lizard
+
+reuse-annotate:
+	./gradlew reuseAnnotate
+
+reuse-download:
+	./gradlew reuseDownload
+
+reuse-lint:
+	./gradlew reuseLint
+
+reuse-fix: reuse-annotate reuse-download
+
+reuse: reuse-lint
