@@ -1,6 +1,6 @@
 MAKEFLAGS := -j1
 
-.PHONY: all fatJar proguardedJar check docs clean
+.PHONY: all fatJar proguardedJar check checkdependencies docs clean
 
 all: check proguardedJar
 
@@ -12,6 +12,9 @@ proguardedJar:
 
 check:
 	./gradlew check
+
+checkdependencies:
+	./gradlew dependencyUpdates
 
 docs:
 	./gradlew javadoc
