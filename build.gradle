@@ -1,11 +1,13 @@
 plugins {
     id 'java'
     id 'org.gradlex.reproducible-builds' version '1.0'
+    id 'io.github.sgtsilvio.gradle.proguard' version '0.7.0'
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.gradlex.reproducible-builds'
+    apply plugin: 'io.github.sgtsilvio.gradle.proguard'
 
     repositories {
         mavenCentral()
@@ -42,5 +44,21 @@ subprojects {
         }
         duplicatesStrategy = DuplicatesStrategy.FAIL
         includeEmptyDirs = false
+    }
+
+    task proguardedJar(type: io.github.sgtsilvio.gradle.proguard.ProguardTask) {
+        addInput {
+            classpath.from(tasks.jar)
+        }
+        addOutput {
+            archiveFile.set(base.libsDirectory.file("${project.name}-${project.version}-proguarded.jar"))
+        }
+        addLibrary {
+            classpath.from(configurations.compileClasspath)
+        }
+
+        jdkModules.add 'java.base'
+
+        rulesFiles.from file("${rootProject.projectDir}/ipscan-plugins.pro")
     }
 }

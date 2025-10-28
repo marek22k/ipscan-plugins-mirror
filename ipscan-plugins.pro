@@ -2,19 +2,23 @@
 -dontobfuscate
 -optimizationpasses 9
 
--keepclasseswithmembers public class * extends AbstractFetcher {
+-keep public class * extends net.azib.ipscan.fetchers.AbstractFetcher {
     public *;
 }
 
--keepclasseswithmembers public class * extends AbstractExporter {
+-keep public class * extends net.azib.ipscan.fetchers.PortTextFetcher {
     public *;
 }
 
--keepclasseswithmembers public class * extends AbstractFeeder {
+-keep public class * implements net.azib.ipscan.core.net.Pinger {
     public *;
 }
 
--keepclasseswithmembers public class * implements Pinger {
+-keep public class * extends net.azib.ipscan.exporters.AbstractExporter {
+    public *;
+}
+
+-keep public class * extends net.azib.ipscan.feeders.AbstractFeeder {
     public *;
 }
 
