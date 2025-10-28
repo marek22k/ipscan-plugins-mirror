@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Copyright (C) 2025 Marek Küthe <m.k@mk16.de>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+when:
+  - event: tag
+
+steps:
+  - name: release
+    environment:
+      IPSCAN_VERSION: 3.9.2
+      IPSCAN_CHECKSUM: 42c0d870d1e77df4ac70f11dcf04581a7a5d9cec60773976971d5fd5cb33bd76
+
+      CODEBERG_GIT_USERNAME:
+        from_secret: codeberg_git_username
+      CODEBERG_GIT_PASSWORD:
+        from_secret: codeberg_git_password
+    image: codeberg.org/mark22k/ci:latest
+    pull: true
+    commands:
+      - VERSION=$(./gradlew properties --quiet | grep "^version:" | cut -d' ' -f2)
+      - IPSCAN_VERSION=3.9.2
+      - mkdir -p libs
+      - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
+      - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
+      - make
+      - |
+        for PLUGIN in ssh-banner
+        do
+          curl --user $CODEBERG_GIT_USERNAME:$CODEBERG_GIT_PASSWORD --upload-file "$PLUGIN/build/libs/$PLUGIN-$version.jar" "https://codeberg.org/api/packages/mark22k/generic/ipscan-plugins/$version/$PLUGIN-$version.jar"
+        done
