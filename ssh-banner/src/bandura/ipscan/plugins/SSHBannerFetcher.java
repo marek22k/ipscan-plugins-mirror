@@ -1,3 +1,5 @@
+package bandura.ipscan.plugins;
+
 import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.fetchers.PortTextFetcher;
 

@@ -1,1 +1,11 @@
 version = '1.0.0'
+
+ext {
+    pluginClass = 'bandura.ipscan.plugins.SSHBannerFetcher'
+}
+
+jar {
+    manifest {
+        attributes 'IPScan-Plugin' : pluginClass
+    }
+}
