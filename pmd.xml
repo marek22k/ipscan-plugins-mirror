@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+SPDX-FileCopyrightText: Copyright (C) 2025 Marek Küthe <m.k@mk16.de>
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 <ruleset
 	name="BattleShip ruleset"
     xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"

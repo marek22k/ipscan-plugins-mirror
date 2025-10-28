@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+SPDX-FileCopyrightText: Copyright (C) 2025 Marek Küthe <m.k@mk16.de>
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 <FindBugsFilter
     xmlns="https://github.com/spotbugs/filter/4.8.4"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

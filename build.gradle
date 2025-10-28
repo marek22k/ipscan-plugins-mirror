@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Copyright (C) 2025 Marek Küthe <m.k@mk16.de>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 plugins {
     id 'java'
     id 'pmd'
@@ -103,6 +107,7 @@ subprojects {
         args '--merge-copyrights'
         args '--recursive'
         args '--skip-unrecognised'
+        args '--skip-existing'
         args rootProject.projectDir
     }
 

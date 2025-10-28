@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+SPDX-FileCopyrightText: Copyright (C) 2025 Marek Küthe <m.k@mk16.de>
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 <profiles version="23">
     <profile kind="CodeFormatterProfile" name="Mareks Style" version="23">
         <setting id="org.eclipse.jdt.core.formatter.insert_space_after_ellipsis" value="insert"/>
