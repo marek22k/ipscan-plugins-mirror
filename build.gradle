@@ -85,6 +85,38 @@ subprojects {
         enabled = false
     }
 
+    task lizard(type: Exec) {
+        executable 'lizard'
+        args '--CCN', '15'
+        args '--length', '400'
+        args '--arguments', '10'
+        args sourceSets.main.allJava.files.collect { it.path }
+    }
+
+    task reuseAnnotate(type: Exec) {
+        executable 'reuse'
+        args 'annotate'
+        args '--copyright', 'Marek Küthe <m.k@mk16.de>'
+        args '--license', 'GPL-3.0-or-later'
+        args '--year', '2025'
+        args '--copyright-prefix', 'spdx-string-c'
+        args '--merge-copyrights'
+        args '--recursive'
+        args '--skip-unrecognised'
+        args rootProject.projectDir
+    }
+
+    task reuseDownload(type: Exec) {
+        executable 'reuse'
+        args 'download'
+        args '--all'
+    }
+
+    task reuseLint(type: Exec) {
+        executable 'reuse'
+        args 'lint'
+    }
+
     task fatJar(type: Jar) {
         dependsOn check
         from {
