@@ -19,7 +19,6 @@ steps:
     pull: true
     commands:
       - VERSION=$(./gradlew properties --quiet | grep "^version:" | cut -d' ' -f2)
-      - IPSCAN_VERSION=3.9.2
       - mkdir -p libs
       - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
       - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
@@ -27,5 +26,5 @@ steps:
       - |
         for PLUGIN in ssh-banner
         do
-          curl --user $CODEBERG_GIT_USERNAME:$CODEBERG_GIT_PASSWORD --upload-file "$PLUGIN/build/libs/$PLUGIN-$version.jar" "https://codeberg.org/api/packages/mark22k/generic/ipscan-plugins/$version/$PLUGIN-$version.jar"
+          curl --user $CODEBERG_GIT_USERNAME:$CODEBERG_GIT_PASSWORD --upload-file "$PLUGIN/build/libs/$PLUGIN-$VERSION.jar" "https://codeberg.org/api/packages/mark22k/generic/ipscan-plugins/$VERSION/$PLUGIN-$VERSION.jar"
         done
