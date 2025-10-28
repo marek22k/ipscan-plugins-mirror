@@ -2,8 +2,6 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-version = '1.0.0'
-
 ext {
     pluginClass = 'bandura.ipscan.plugins.SSHBannerFetcher'
 }
