@@ -10,7 +10,16 @@ when:
 
 steps:
   - name: build
+    environment:
+      IPSCAN_VERSION: 3.9.2
+      IPSCAN_CHECKSUM: 42c0d870d1e77df4ac70f11dcf04581a7a5d9cec60773976971d5fd5cb33bd76
+
     image: codeberg.org/mark22k/ci:latest
     pull: true
     commands:
+      - VERSION=$(./gradlew properties --quiet | grep "^version:" | cut -d' ' -f2)
+      - IPSCAN_VERSION=3.9.2
+      - mkdir -p libs
+      - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
+      - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
       - make
