@@ -20,6 +20,7 @@ public class SSHBannerFetcher extends PortTextFetcher {
 
     @CheckReturnValue
     @NonNull
+    @Override
     public String getId() {
         return "fetcher.sshBanner";
     }
