@@ -9,6 +9,9 @@ import net.azib.ipscan.fetchers.PortTextFetcher;
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.NonNull;
 
+/**
+ * Fetcher, which retrieves the SSH banner
+ */
 public class SSHBannerFetcher extends PortTextFetcher {
 
     public SSHBannerFetcher(ScannerConfig scannerConfig) {
