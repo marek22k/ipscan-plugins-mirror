@@ -50,12 +50,10 @@ subprojects {
 
     spotless {
         format 'misc', {
-            // define the files to apply `misc` to
-            target '*.gradle', '.gitattributes', '.gitignore'
+            target '*.gradle', '.gitattributes', '.gitignore', '*.xml', '*.pro', '*.md'
 
-            // define the steps to apply to those files
             trimTrailingWhitespace()
-            leadingTabsToSpaces() // or leadingTabsToSpaces. Takes an integer argument if you don't like 4
+            leadingTabsToSpaces()
             endWithNewline()
         }
         java {
@@ -64,9 +62,9 @@ subprojects {
 
             eclipse()
                 .sortMembersEnabled(true)
-                .sortMembersOrder("T,SF,SI,SM,F,I,C,M")
+                .sortMembersOrder('T,SF,SI,SM,F,I,C,M')
                 .sortMembersVisibilityOrderEnabled(true)
-                .sortMembersVisibilityOrder("B,R,D,V")
+                .sortMembersVisibilityOrder('B,R,D,V')
                 .configFile("${rootProject.projectDir}/eclipse-jdt.xml")
         }
     }
@@ -101,7 +99,7 @@ subprojects {
         }
         duplicatesStrategy = DuplicatesStrategy.FAIL
         includeEmptyDirs = false
-        archiveClassifier = 'fatjar'
+        archiveClassifier = 'nonproguarded'
         with jar
     }
 
