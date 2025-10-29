@@ -165,4 +165,13 @@ subprojects {
 
         rulesFiles.from file("${rootProject.projectDir}/ipscan-plugins.pro")
     }
+
+    task install(type: Copy) {
+        dependsOn proguardedJar
+
+        duplicatesStrategy = DuplicatesStrategy.FAIL
+
+        from proguardedJar.outputs.files
+        into "${System.getProperty('user.home')}/.ipscan"
+    }
 }
