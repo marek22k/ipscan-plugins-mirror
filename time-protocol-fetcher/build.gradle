@@ -1,0 +1,13 @@
+// SPDX-FileCopyrightText: Copyright (C) 2025 Marek Küthe <m.k@mk16.de>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+ext {
+    pluginClass = 'bandura.ipscan.plugins.TimeProtocolFetcher'
+}
+
+fatJar {
+    manifest {
+        attributes 'IPScan-Plugin' : pluginClass
+    }
+}

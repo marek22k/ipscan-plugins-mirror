@@ -26,7 +26,7 @@ import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 
 /**
- * Fetcher, which retrieves the Mikrotik RouterOS version via the WinBox API
+ * Fetcher that checks whether the Echo Server is working.
  */
 public class EchoServerFetcher extends AbstractFetcher {
     private static final int ECHO_PORT = 7;
