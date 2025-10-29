@@ -11,6 +11,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -46,13 +47,6 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     }
 
     @CheckReturnValue
-    @NonNull
-    @Override
-    public String getId() {
-        return "fetcher.mikrotikRouterOSVersionFetcher";
-    }
-
-    @CheckReturnValue
     @Nullable
     @Override
     public Object scan(ScanningSubject subject) {
@@ -62,7 +56,9 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
             socket.setSoTimeout(scannerConfig.portTimeout * 2);
             socket.setSoLinger(true, 0);
 
-            socket.getOutputStream().write(PAYLOAD);
+            OutputStream os = socket.getOutputStream();
+            os.write(PAYLOAD);
+            os.flush();
 
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream(), StandardCharsets.ISO_8859_1)
@@ -92,6 +88,13 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
             LOG.log(Level.FINE, subject.getAddress().toString(), e);
         }
         return null;
+    }
+
+    @CheckReturnValue
+    @NonNull
+    @Override
+    public String getId() {
+        return "fetcher.mikrotikRouterOSVersionFetcher";
     }
 
 }
