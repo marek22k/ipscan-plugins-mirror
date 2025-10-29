@@ -17,7 +17,6 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.time.Instant;
-import java.util.HexFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +34,6 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     private static final int TIME_PORT = 37;
     private static final Logger LOG = LoggerFactory.getLogger();
 
-    @CheckReturnValue
     @NonNull
     private static byte[] readTimeBytesFromInputStream(InputStream is) throws IOException {
         byte[] time1 = is.readNBytes(4);
@@ -55,6 +53,25 @@ public class TimeProtocolFetcher extends AbstractFetcher {
 
         /* only four bytes read */
         return time1;
+    }
+
+    @CheckReturnValue
+    @NonNull
+    private static long rfc868BytesToRfc868Timestamp(byte[] time) {
+        if (time.length != 4 && time.length != 8) {
+            throw new IllegalArgumentException("Invalid time response length: " + time.length);
+        }
+        if (time.length == 4) {
+            return Integer.toUnsignedLong(ByteBuffer.wrap(time).getInt());
+        } else {
+            return ByteBuffer.wrap(time).getLong();
+        }
+    }
+
+    @CheckReturnValue
+    @NonNull
+    private static long rfc868TimestampToUnixTimestamp(long rfc868timestamp) {
+        return rfc868timestamp - 2208988800L;
     }
 
     private ScannerConfig scannerConfig;
@@ -81,22 +98,17 @@ public class TimeProtocolFetcher extends AbstractFetcher {
             socket.setSoLinger(true, 0);
 
             byte[] timeResponse = readTimeBytesFromInputStream(socket.getInputStream());
-            System.out.println("Raw bytes (hex): " + HexFormat.of().formatHex(timeResponse));
             switch (timeResponse.length) {
                 case 4, 8: {
                     subject.setResultType(ResultType.WITH_PORTS);
 
-                    long timestamp = (timeResponse.length == 4
-                            ? Integer.toUnsignedLong(ByteBuffer.wrap(timeResponse).getInt())
-                            : ByteBuffer.wrap(timeResponse).getLong()) - 2208988800L;
+                    long timestamp = rfc868TimestampToUnixTimestamp(rfc868BytesToRfc868Timestamp(timeResponse));
 
                     if (timestamp < Instant.MIN.getEpochSecond() || timestamp > Instant.MAX.getEpochSecond()) {
-                        return "TIME_INVALID: timestamp out of range (" + timestamp + ")";
+                        return null;
                     }
 
-                    Instant time = Instant.ofEpochSecond(timestamp);
-
-                    return time.toString();
+                    return Instant.ofEpochSecond(timestamp).toString();
                 }
 
                 default: {
