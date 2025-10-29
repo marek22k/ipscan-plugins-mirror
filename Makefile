@@ -4,7 +4,7 @@
 
 MAKEFLAGS := -j1
 
-.PHONY: all fatJar proguardedJar check pmd spotbugs checkdependencies docs clean format lizard reuse-annotate reuse-download reuse-lint reuse-fix reuse
+.PHONY: all fatJar proguardedJar install check pmd spotbugs checkdependencies docs clean format lizard reuse-annotate reuse-download reuse-lint reuse-fix reuse
 
 all: check proguardedJar
 
@@ -13,6 +13,9 @@ fatJar:
 
 proguardedJar:
 	./gradlew proguardedJar
+
+install:
+	./gradlew install
 
 check:
 	./gradlew check
