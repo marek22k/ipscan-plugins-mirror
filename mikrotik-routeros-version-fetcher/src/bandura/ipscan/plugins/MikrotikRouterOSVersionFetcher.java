@@ -47,6 +47,13 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     }
 
     @CheckReturnValue
+    @NonNull
+    @Override
+    public String getId() {
+        return "fetcher.mikrotikRouterOSVersionFetcher";
+    }
+
+    @CheckReturnValue
     @Nullable
     @Override
     public Object scan(ScanningSubject subject) {
@@ -88,13 +95,6 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
             LOG.log(Level.FINE, subject.getAddress().toString(), e);
         }
         return null;
-    }
-
-    @CheckReturnValue
-    @NonNull
-    @Override
-    public String getId() {
-        return "fetcher.mikrotikRouterOSVersionFetcher";
     }
 
 }
