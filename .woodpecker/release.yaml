@@ -24,7 +24,7 @@ steps:
       - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
       - make
       - |
-        for PLUGIN in ssh-banner mikrotik-routeros-version echo-server-fetcher time-protocol-fetcher
+        for PLUGIN in ssh-banner mikrotik-routeros-version echo-server-fetcher time-protocol-fetcher daytime-protocol-fetcher
         do
           curl --user $CODEBERG_GIT_USERNAME:$CODEBERG_GIT_PASSWORD --upload-file "$PLUGIN/build/libs/$PLUGIN-$VERSION.jar" "https://codeberg.org/api/packages/mark22k/generic/ipscan-plugins/$VERSION/$PLUGIN-$VERSION.jar"
         done
