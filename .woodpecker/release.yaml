@@ -18,6 +18,7 @@ steps:
     image: codeberg.org/mark22k/ci:latest
     pull: true
     commands:
+      - ./gradlew properties
       - VERSION=$(./gradlew properties --quiet | grep "^version:" | cut -d' ' -f2)
       - mkdir -p libs
       - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
