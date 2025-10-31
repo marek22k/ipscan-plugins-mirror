@@ -32,7 +32,7 @@ import net.azib.ipscan.fetchers.AbstractFetcher;
 public class ChargenFetcher extends AbstractFetcher {
     private static final int CHARGEN_PORT = 19;
     private static final Logger LOG = LoggerFactory.getLogger();
-    private static final int LINES_TO_CHECK_ADDITIONALLY = 1;
+    private static final int LINES_TO_CHECK_ADDITIONALLY = 2;
     private static final String RFC_PATTERN_CHARACTERS = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
     @CheckReturnValue
