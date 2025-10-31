@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import net.azib.ipscan.config.LoggerFactory;
 import net.azib.ipscan.config.ScannerConfig;
+import net.azib.ipscan.core.ScanningResult.ResultType;
 import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 
@@ -31,7 +32,7 @@ import net.azib.ipscan.fetchers.AbstractFetcher;
 public class ChargenFetcher extends AbstractFetcher {
     private static final int CHARGEN_PORT = 19;
     private static final Logger LOG = LoggerFactory.getLogger();
-    private static final int LINES_TO_CHECK_ADDITONAL = 1;
+    private static final int LINES_TO_CHECK_ADDITIONALLY = 1;
     private static final String RFC_PATTERN_CHARACTERS = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
     @CheckReturnValue
@@ -40,10 +41,13 @@ public class ChargenFetcher extends AbstractFetcher {
         int start = no % (RFC_PATTERN_CHARACTERS.length() + 1);
         int end = Math.min(start + 72, RFC_PATTERN_CHARACTERS.length());
         int missingCharacters = 72 - (end - start);
+
         String result = RFC_PATTERN_CHARACTERS.substring(start, end);
+
         if (missingCharacters != 0) {
             result = result + RFC_PATTERN_CHARACTERS.substring(0, missingCharacters);
         }
+
         return result;
     }
 
@@ -78,8 +82,9 @@ public class ChargenFetcher extends AbstractFetcher {
                 return "False";
             } else {
                 subject.setResultType(ResultType.WITH_PORTS);
+
                 if (line.equals(getRFCPattern(0))) {
-                    for (int no = 0; no < LINES_TO_CHECK_ADDITONAL; no++) {
+                    for (int no = 0; no < LINES_TO_CHECK_ADDITIONALLY; no++) {
                         String exprectedResponse = getRFCPattern(no + 1);
                         String response = in.readLine();
                         if (response == null || !response.equals(exprectedResponse)) {
