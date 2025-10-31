@@ -88,7 +88,7 @@ public class ChargenFetcher extends AbstractFetcher {
                         String exprectedResponse = getRFCPattern(no + 1);
                         String response = in.readLine();
                         if (response == null || !response.equals(exprectedResponse)) {
-                            return "True (partial RFC patterns)";
+                            return "True (partial RFC pattern)";
                         }
                     }
                     return "True (RFC pattern)";
