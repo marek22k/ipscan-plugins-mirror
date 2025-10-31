@@ -15,3 +15,4 @@ SPDX-License-Identifier: GPL-3.0-or-later
 | echo-server-fetcher | Checks whether the echo server is working. Returns `True` if it is working and `False (n)` if it is not working, where n is the position (starting at 0) of the first byte that differs from the payload sent. 714 bytes are sent as payload. |
 | time-protocol-fetcher | Retrieves the current time from a time server (RFC848) and returns it. |
 | daytime-protocol-fetcher | Retrieves a time string via the Daytime protocol and returns it. |
+| three-way-pinger | Pings uses the Java build-in, the UDP Pinger and the TCP Pinger |
