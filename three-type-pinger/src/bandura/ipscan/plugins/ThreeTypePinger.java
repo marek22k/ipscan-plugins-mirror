@@ -10,16 +10,16 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import java.io.IOException;
 
 import net.azib.ipscan.core.ScanningSubject;
+import net.azib.ipscan.core.net.AbstractPinger;
 import net.azib.ipscan.core.net.JavaPinger;
 import net.azib.ipscan.core.net.PingResult;
-import net.azib.ipscan.core.net.Pinger;
 import net.azib.ipscan.core.net.TCPPinger;
 import net.azib.ipscan.core.net.UDPPinger;
 
 /**
  * Pinger, which combines Java build-in pinger, UDP Pinger and TCP Pinger
  */
-public class ThreeTypePinger implements Pinger {
+public class ThreeTypePinger extends AbstractPinger {
     private JavaPinger javaPinger;
     private UDPPinger udpPinger;
     private TCPPinger tcpPinger;
@@ -32,7 +32,14 @@ public class ThreeTypePinger implements Pinger {
 
     @CheckReturnValue
     @NonNull
-    @Override
+    // @Override
+    public String getId() {
+        return "pinger.threeTypePinger";
+    }
+
+    @CheckReturnValue
+    @NonNull
+    // @Override
     public PingResult ping(ScanningSubject subject, int count) throws IOException {
         // try Java Build-in first - as it could use ICMP
         // minimum three tries to prevent packet loss in unreliable networks

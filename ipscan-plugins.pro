@@ -14,7 +14,7 @@
     public *;
 }
 
--keep public class * implements net.azib.ipscan.core.net.Pinger {
+-keep public class * extends net.azib.ipscan.core.net.AbstractPinger {
     public *;
 }
 
