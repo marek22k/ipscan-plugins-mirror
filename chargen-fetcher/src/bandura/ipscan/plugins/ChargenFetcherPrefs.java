@@ -31,7 +31,12 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
     @Override
     public void openFor(Fetcher fetcher) {
         if (!(fetcher instanceof ChargenFetcher)) {
-            throw new IllegalArgumentException("Invalid fetcher: " + fetcher.getClass().getName());
+            throw new IllegalArgumentException(
+                    String.format(
+                            "%s: %s", Labels.getLabel("text.fetcher.chargenFetcher.invalidFetcher"),
+                            fetcher.getClass().getName()
+                    )
+            );
         }
         this.fetcher = (ChargenFetcher) fetcher;
         open();
@@ -40,7 +45,7 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
     @Override
     protected void populateShell() {
         if (fetcher == null) {
-            throw new IllegalArgumentException("Fetcher is null.");
+            throw new IllegalArgumentException(Labels.getLabel("text.fetcher.chargenFetcher.fetcherIsNull"));
         }
 
         shell = new Shell(Display.getCurrent().getActiveShell(), SWT.DIALOG_TRIM);
@@ -74,7 +79,9 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
 
             int lines = Integer.parseInt(linesText.getText());
             if (lines < 0) {
-                throw new IllegalArgumentException("Lines is negative: " + lines);
+                throw new IllegalArgumentException(
+                        String.format("%s: %d", Labels.getLabel("exception.fetcher.chargenFetcher.noIsNegative"), lines)
+                );
             }
 
             fetcher.setLinesToCheckAdditionally(lines);

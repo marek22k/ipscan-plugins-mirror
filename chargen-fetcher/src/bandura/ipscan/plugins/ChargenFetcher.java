@@ -20,13 +20,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.azib.ipscan.config.Labels;
 import net.azib.ipscan.config.LoggerFactory;
 import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.core.ScanningResult.ResultType;
 import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 import net.azib.ipscan.fetchers.FetcherPrefs;
-import net.azib.ipscan.config.Labels;
 
 /**
  * Fetcher that checks whether the a Chargen is running and working.
@@ -108,12 +108,22 @@ public class ChargenFetcher extends AbstractFetcher {
                         String expectedResponse = getRFCPattern(numberOfLines);
                         String response = in.readLine();
                         if (response == null || !response.equals(expectedResponse)) {
-                            return String.format("%s (%s, %d/%d)", Labels.getLabel("text.fetcher.chargenFetcher.true"), Labels.getLabel("text.fetcher.chargenFetcher.partialRFCPattern"), (numberOfLines + 1), (linesToCheckAdditionally + 1));
+                            return String.format(
+                                    "%s (%s, %d/%d)", Labels.getLabel("text.fetcher.chargenFetcher.true"),
+                                    Labels.getLabel("text.fetcher.chargenFetcher.partialRFCPattern"),
+                                    (numberOfLines + 1), (linesToCheckAdditionally + 1)
+                            );
                         }
                     }
-                    return String.format("%s (%s)", Labels.getLabel("text.fetcher.chargenFetcher.true"), Labels.getLabel("text.fetcher.chargenFetcher.RFCPattern"));
+                    return String.format(
+                            "%s (%s)", Labels.getLabel("text.fetcher.chargenFetcher.true"),
+                            Labels.getLabel("text.fetcher.chargenFetcher.RFCPattern")
+                    );
                 } else {
-                    return String.format("%s (%s)", Labels.getLabel("text.fetcher.chargenFetcher.true"), Labels.getLabel("text.fetcher.chargenFetcher.nonRFCPattern"));
+                    return String.format(
+                            "%s (%s)", Labels.getLabel("text.fetcher.chargenFetcher.true"),
+                            Labels.getLabel("text.fetcher.chargenFetcher.nonRFCPattern")
+                    );
                 }
             }
         } catch (ConnectException e) {
@@ -130,7 +140,12 @@ public class ChargenFetcher extends AbstractFetcher {
 
     public void setLinesToCheckAdditionally(int linesToCheckAdditionally) {
         if (linesToCheckAdditionally < 0) {
-            throw new IllegalArgumentException("Value is negative: " + linesToCheckAdditionally);
+            throw new IllegalArgumentException(
+                    String.format(
+                            "%s: %d", Labels.getLabel("exception.fetcher.chargenFetcher.noIsNegative"),
+                            linesToCheckAdditionally
+                    )
+            );
         }
         this.linesToCheckAdditionally = linesToCheckAdditionally;
     }
