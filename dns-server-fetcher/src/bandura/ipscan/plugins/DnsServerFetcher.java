@@ -63,8 +63,11 @@ public class DnsServerFetcher extends AbstractFetcher {
                 Lookup l = new Lookup(version_record, Type.TXT, DClass.CH);
                 l.setResolver(r);
                 l.run();
-                if (l.getResult() == Lookup.SUCCESSFUL) {
+                int status = l.getResult();
+                if (status == Lookup.HOST_NOT_FOUND || status == Lookup.SUCCESSFUL || status == Lookup.TYPE_NOT_FOUND) {
                     subject.setResultType(ResultType.WITH_PORTS);
+                }
+                if (status == Lookup.SUCCESSFUL) {
                     Record[] answers = l.getAnswers();
                     if (answers.length > 0) {
                         String server = answers[0].rdataToString();
