@@ -16,4 +16,5 @@ SPDX-License-Identifier: GPL-3.0-or-later
 | time-protocol-fetcher | Retrieves the current time from a time server (RFC848) and returns it. |
 | daytime-protocol-fetcher | Retrieves a time string via the Daytime protocol and returns it. |
 | chargen-fetcher | Checks whether a chargen server is running. If so, checks whether it returns the pattern in the RFC. Returns `False` if no chargen server is running; returns `True (non-RFC pattern)` if no RFC patterns were returned; returns `True (partial RFC pattern, n/m)` if only the first n of m (configurable in the settings) lines matched the expected RFC pattern; and returns `True (RFC pattern)` if the received pattern completely matches the RFC pattern. Windows XP and xinetd's implementation do not fully implement the RFC pattern. |
+| dns-server-fetcher | Attempt to determine the DNS server by querying the Chaos text record `version.bind.` and, if necessary, the additional `version.server., `authors.bind.`, `hostname.bind.` and `id.server.` records. |
 | three-way-pinger | Pings uses the Java build-in, the UDP Pinger and the TCP Pinger |
