@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.azib.ipscan.config.Labels;
 import net.azib.ipscan.config.LoggerFactory;
 import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.core.ScanningResult.ResultType;
@@ -59,7 +60,13 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     @NonNull
     private static long rfc868BytesToRfc868Timestamp(byte[] time) {
         if (time.length != 4 && time.length != 8) {
-            throw new IllegalArgumentException("Invalid time response length: " + time.length);
+            throw new IllegalArgumentException(
+                    String.format(
+                            "%s: %d",
+                            Labels.getLabel("exception.fetcher.timeProtocolFetcher.invalidTimeResponseLength"),
+                            time.length
+                    )
+            );
         }
         if (time.length == 4) {
             return Integer.toUnsignedLong(ByteBuffer.wrap(time).getInt());
