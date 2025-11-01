@@ -110,8 +110,8 @@ subprojects {
             // 'org.checkerframework.checker.signature.SignatureChecker',
             // 'org.checkerframework.checker.guieffect.GuiEffectChecker',
             // 'org.checkerframework.framework.util.PurityChecker',
-            // 'org.checkerframework.common.value.ValueChecker',
-            // 'org.checkerframework.common.initializedfields.InitializedFieldsChecker'
+            'org.checkerframework.common.value.ValueChecker',
+            'org.checkerframework.common.initializedfields.InitializedFieldsChecker'
         ]
         extraJavacArgs = [
             '-AskipUses=net.azib.ipscan',

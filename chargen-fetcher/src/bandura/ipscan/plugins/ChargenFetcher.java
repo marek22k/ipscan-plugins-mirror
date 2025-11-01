@@ -26,6 +26,7 @@ import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 import net.azib.ipscan.fetchers.FetcherPrefs;
 
+import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -39,7 +40,7 @@ public class ChargenFetcher extends AbstractFetcher {
 
     @CheckReturnValue
     @NonNull
-    private static String getRFCPattern(int no) {
+    private static String getRFCPattern(@NonNegative int no) {
         int start = no % (RFC_PATTERN_CHARACTERS.length() + 1);
         int end = Math.min(start + 72, RFC_PATTERN_CHARACTERS.length());
         int missingCharacters = 72 - (end - start);
