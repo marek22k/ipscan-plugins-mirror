@@ -6,6 +6,8 @@ package bandura.ipscan.plugins;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 import java.io.IOException;
 
 import net.azib.ipscan.core.ScanningSubject;
@@ -14,8 +16,6 @@ import net.azib.ipscan.core.net.JavaPinger;
 import net.azib.ipscan.core.net.PingResult;
 import net.azib.ipscan.core.net.TCPPinger;
 import net.azib.ipscan.core.net.UDPPinger;
-
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Pinger, which combines Java build-in pinger, UDP Pinger and TCP Pinger

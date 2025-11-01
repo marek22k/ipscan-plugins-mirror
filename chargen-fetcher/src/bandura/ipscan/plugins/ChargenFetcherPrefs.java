@@ -4,6 +4,9 @@
 
 package bandura.ipscan.plugins;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
+
 import java.util.prefs.Preferences;
 
 import net.azib.ipscan.config.Labels;
@@ -12,8 +15,6 @@ import net.azib.ipscan.fetchers.FetcherPrefs;
 import net.azib.ipscan.gui.AbstractModalDialog;
 import net.azib.ipscan.gui.util.LayoutHelper;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.widgets.Button;

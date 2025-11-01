@@ -6,11 +6,11 @@ package bandura.ipscan.plugins;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 
-import net.azib.ipscan.config.ScannerConfig;
-import net.azib.ipscan.fetchers.PortTextFetcher;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.regex.qual.Regex;
+
+import net.azib.ipscan.config.ScannerConfig;
+import net.azib.ipscan.fetchers.PortTextFetcher;
 
 /**
  * Fetcher, which retrieves the daytime.
