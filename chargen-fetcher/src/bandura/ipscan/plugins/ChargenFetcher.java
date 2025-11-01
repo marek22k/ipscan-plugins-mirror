@@ -104,9 +104,9 @@ public class ChargenFetcher extends AbstractFetcher {
                 if (line.equals(getRFCPattern(0))) {
                     for (int no = 0; no < linesToCheckAdditionally; no++) {
                         int numberOfLines = no + 1; // including 0
-                        String exprectedResponse = getRFCPattern(numberOfLines);
+                        String expectedResponse = getRFCPattern(numberOfLines);
                         String response = in.readLine();
-                        if (response == null || !response.equals(exprectedResponse)) {
+                        if (response == null || !response.equals(expectedResponse)) {
                             return "True (partial RFC pattern, " + (numberOfLines + 1) + "/"
                                     + (linesToCheckAdditionally + 1) + ")";
                         }
