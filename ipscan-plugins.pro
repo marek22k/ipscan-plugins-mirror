@@ -30,7 +30,6 @@
 }
 
 -dontwarn org.slf4j.**
--dontwarn java.awt.**
 -dontwarn sun.net.spi.nameservice.**
 -dontwarn android.**
 -dontwarn javax.naming.**
