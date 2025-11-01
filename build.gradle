@@ -71,7 +71,7 @@ subprojects {
             endWithNewline()
         }
         java {
-            importOrder('\\#', 'edu.umd.cs.findbugs.annotations', 'org.checkerframework.checker', 'java', 'net.azib.ipscan');
+            importOrder('\\#', 'edu.umd.cs.findbugs.annotations', 'org.checkerframework.checker', 'java', 'org.xbill.DNS', 'net.azib.ipscan');
 
             removeUnusedImports()
             forbidWildcardImports()

@@ -12,12 +12,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.azib.ipscan.config.LoggerFactory;
-import net.azib.ipscan.config.ScannerConfig;
-import net.azib.ipscan.core.ScanningResult.ResultType;
-import net.azib.ipscan.core.ScanningSubject;
-import net.azib.ipscan.fetchers.AbstractFetcher;
-
 import org.xbill.DNS.DClass;
 import org.xbill.DNS.Lookup;
 import org.xbill.DNS.Record;
@@ -26,12 +20,18 @@ import org.xbill.DNS.SimpleResolver;
 import org.xbill.DNS.TextParseException;
 import org.xbill.DNS.Type;
 
+import net.azib.ipscan.config.LoggerFactory;
+import net.azib.ipscan.config.ScannerConfig;
+import net.azib.ipscan.core.ScanningResult.ResultType;
+import net.azib.ipscan.core.ScanningSubject;
+import net.azib.ipscan.fetchers.AbstractFetcher;
+
 /**
  * Fetcher that checks if a and which DNS server is running.
  */
 public class DnsServerFetcher extends AbstractFetcher {
     private static final int DNS_PORT = 53;
-    private static final @NonNull String[] versions_records = {"version.bind.", "version.server.", "authors.bind.",
+    private static final String[] versions_records = {"version.bind.", "version.server.", "authors.bind.",
             "hostname.bind.", "id.server."};
     private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
