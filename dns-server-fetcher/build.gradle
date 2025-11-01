@@ -6,6 +6,13 @@ ext {
     pluginClass = 'bandura.ipscan.plugins.DnsServerFetcher'
 }
 
+dependencies {
+    implementation 'dnsjava:dnsjava:3.6.3'
+    implementation 'net.java.dev.jna:jna:5.18.1'
+    implementation 'net.java.dev.jna:jna-platform:5.18.1'
+    compileOnly 'org.projectlombok:lombok:1.18.42'
+}
+
 fatJar {
     manifest {
         attributes 'IPScan-Plugin' : pluginClass
