@@ -26,6 +26,10 @@
     public *;
 }
 
+-keep public class * implements net.azib.ipscan.fetchers.FetcherPrefs {
+    public *;
+}
+
 -assumenosideeffects public class java.lang.System {
     public static long currentTimeMillis();
     static java.lang.Class getCallerClass();
