@@ -15,7 +15,7 @@ proguardedJar:
 	./gradlew proguardedJar
 
 install:
-	./gradlew install
+	./gradlew install -PskipCheckerFramework
 
 check:
 	./gradlew check
