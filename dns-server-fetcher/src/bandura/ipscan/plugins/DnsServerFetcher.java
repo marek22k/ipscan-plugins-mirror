@@ -66,7 +66,7 @@ public class DnsServerFetcher extends AbstractFetcher {
                 if (l.getResult() == Lookup.SUCCESSFUL) {
                     subject.setResultType(ResultType.WITH_PORTS);
                     Record[] answers = l.getAnswers();
-                    if (answers != null && answers.length > 0) {
+                    if (answers.length > 0) {
                         String server = answers[0].rdataToString();
                         if (server.length() >= 2 && server.startsWith("\"") && server.endsWith("\"")) {
                             return server.substring(1, server.length() - 1);
