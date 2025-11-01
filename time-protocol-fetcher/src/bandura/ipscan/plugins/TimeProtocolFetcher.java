@@ -20,7 +20,6 @@ import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.azib.ipscan.config.Labels;
 import net.azib.ipscan.config.LoggerFactory;
 import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.core.ScanningResult.ResultType;
@@ -36,7 +35,10 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     private static final Logger LOG = LoggerFactory.getLogger();
 
     @NonNull
-    private static byte[] readTimeBytesFromInputStream(InputStream is) throws IOException {
+    private static byte[] readTimeBytesFromInputStream(@NonNull InputStream is) throws IOException {
+        if (is == null) {
+            throw new IllegalArgumentException("Input stream is null");
+        }
         byte[] time1 = is.readNBytes(4);
 
         if (time1.length < 4) {
@@ -58,15 +60,12 @@ public class TimeProtocolFetcher extends AbstractFetcher {
 
     @CheckReturnValue
     @NonNull
-    private static long rfc868BytesToRfc868Timestamp(byte[] time) {
+    private static long rfc868BytesToRfc868Timestamp(@NonNull byte[] time) {
+        if (time == null) {
+            throw new IllegalArgumentException("Time is null");
+        }
         if (time.length != 4 && time.length != 8) {
-            throw new IllegalArgumentException(
-                    String.format(
-                            "%s: %d",
-                            Labels.getLabel("exception.fetcher.timeProtocolFetcher.invalidTimeResponseLength"),
-                            time.length
-                    )
-            );
+            throw new IllegalArgumentException(String.format("Invalid time response length: %d", time.length));
         }
         if (time.length == 4) {
             return Integer.toUnsignedLong(ByteBuffer.wrap(time).getInt());
@@ -83,7 +82,7 @@ public class TimeProtocolFetcher extends AbstractFetcher {
 
     private ScannerConfig scannerConfig;
 
-    public TimeProtocolFetcher(ScannerConfig scannerConfig) {
+    public TimeProtocolFetcher(@NonNull ScannerConfig scannerConfig) {
         this.scannerConfig = scannerConfig;
     }
 
@@ -97,7 +96,11 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     @CheckReturnValue
     @Nullable
     @Override
-    public Object scan(ScanningSubject subject) {
+    public Object scan(@NonNull ScanningSubject subject) {
+        if (subject == null) {
+            throw new IllegalArgumentException("");
+        }
+
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), TIME_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);

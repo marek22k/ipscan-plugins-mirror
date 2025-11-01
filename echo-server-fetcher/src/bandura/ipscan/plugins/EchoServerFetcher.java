@@ -130,7 +130,10 @@ public class EchoServerFetcher extends AbstractFetcher {
 
     private ScannerConfig scannerConfig;
 
-    public EchoServerFetcher(ScannerConfig scannerConfig) {
+    public EchoServerFetcher(@NonNull ScannerConfig scannerConfig) {
+        if (scannerConfig == null) {
+            throw new IllegalArgumentException("Scanner config is null");
+        }
         this.scannerConfig = scannerConfig;
     }
 
@@ -144,7 +147,10 @@ public class EchoServerFetcher extends AbstractFetcher {
     @CheckReturnValue
     @Nullable
     @Override
-    public Object scan(ScanningSubject subject) {
+    public Object scan(@NonNull ScanningSubject subject) {
+        if (subject == null) {
+            throw new IllegalArgumentException("Subject is null");
+        }
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), ECHO_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);

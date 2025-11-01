@@ -40,7 +40,7 @@ public class ChargenFetcher extends AbstractFetcher {
     @NonNull
     private static String getRFCPattern(int no) {
         if (no < 0) {
-            throw new IllegalArgumentException("Number is negative: " + no);
+            throw new IllegalArgumentException(String.format("Number is negative: %d", no));
         }
         int start = no % (RFC_PATTERN_CHARACTERS.length() + 1);
         int end = Math.min(start + 72, RFC_PATTERN_CHARACTERS.length());
@@ -58,7 +58,10 @@ public class ChargenFetcher extends AbstractFetcher {
     private ScannerConfig scannerConfig;
     private int linesToCheckAdditionally;
 
-    public ChargenFetcher(ScannerConfig scannerConfig) {
+    public ChargenFetcher(@NonNull ScannerConfig scannerConfig) {
+        if (scannerConfig == null) {
+            throw new IllegalArgumentException("Scanner config is null");
+        }
         this.scannerConfig = scannerConfig;
         this.linesToCheckAdditionally = 2;
     }
@@ -86,7 +89,10 @@ public class ChargenFetcher extends AbstractFetcher {
     @CheckReturnValue
     @Nullable
     @Override
-    public Object scan(ScanningSubject subject) {
+    public Object scan(@NonNull ScanningSubject subject) {
+        if (subject == null) {
+            throw new IllegalArgumentException("Subject is null");
+        }
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), CHARGEN_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
@@ -141,10 +147,7 @@ public class ChargenFetcher extends AbstractFetcher {
     public void setLinesToCheckAdditionally(int linesToCheckAdditionally) {
         if (linesToCheckAdditionally < 0) {
             throw new IllegalArgumentException(
-                    String.format(
-                            "%s: %d", Labels.getLabel("exception.fetcher.chargenFetcher.noIsNegative"),
-                            linesToCheckAdditionally
-                    )
+                    String.format("Number of lines is negative: %d", linesToCheckAdditionally)
             );
         }
         this.linesToCheckAdditionally = linesToCheckAdditionally;

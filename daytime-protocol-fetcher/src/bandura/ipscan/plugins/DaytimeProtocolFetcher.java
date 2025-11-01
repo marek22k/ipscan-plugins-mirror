@@ -17,7 +17,7 @@ public class DaytimeProtocolFetcher extends PortTextFetcher {
     private static final int DAYTIME_PORT = 13;
     private static final String REGEX = "^(.*)$";
 
-    public DaytimeProtocolFetcher(ScannerConfig scannerConfig) {
+    public DaytimeProtocolFetcher(@NonNull ScannerConfig scannerConfig) {
         super(scannerConfig, DAYTIME_PORT, "", REGEX);
     }
 

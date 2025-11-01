@@ -42,7 +42,10 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
 
     private ScannerConfig scannerConfig;
 
-    public MikrotikRouterOSVersionFetcher(ScannerConfig scannerConfig) {
+    public MikrotikRouterOSVersionFetcher(@NonNull ScannerConfig scannerConfig) {
+        if (scannerConfig == null) {
+            throw new IllegalArgumentException("Scanner config is null");
+        }
         this.scannerConfig = scannerConfig;
     }
 
@@ -56,7 +59,10 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     @CheckReturnValue
     @Nullable
     @Override
-    public Object scan(ScanningSubject subject) {
+    public Object scan(@NonNull ScanningSubject subject) {
+        if (subject == null) {
+            throw new IllegalArgumentException("Subject is null");
+        }
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), WINBOX_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
