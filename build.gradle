@@ -194,6 +194,7 @@ subprojects {
         jdkModules.add 'java.base'
         jdkModules.add 'java.logging'
         jdkModules.add 'java.prefs'
+        jdkModules.add 'java.desktop'
 
         rulesFiles.from file("${rootProject.projectDir}/ipscan-plugins.pro")
     }

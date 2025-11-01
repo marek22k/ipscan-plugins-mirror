@@ -29,8 +29,6 @@
     public *;
 }
 
--dontwarn com.sun.jna.platform.**
--dontwarn com.sun.jna.Native.**
 -dontwarn org.slf4j.**
 -dontwarn java.awt.**
 -dontwarn sun.net.spi.nameservice.**
