@@ -33,14 +33,14 @@ public class ThreeTypePinger extends AbstractPinger {
 
     @CheckReturnValue
     @NonNull
-    // @Override
+    @Override
     public String getId() {
         return "pinger.threeTypePinger";
     }
 
     @CheckReturnValue
     @NonNull
-    // @Override
+    @Override
     public PingResult ping(@NonNull ScanningSubject subject, int count) throws IOException {
         // try Java Build-in first - as it could use ICMP
         // minimum three tries to prevent packet loss in unreliable networks
