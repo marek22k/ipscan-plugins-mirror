@@ -108,7 +108,7 @@ subprojects {
             'org.checkerframework.common.initializedfields.InitializedFieldsChecker'
         ]
         extraJavacArgs = [
-            '-AskipUses=net.azib.ipscan',
+            '-AskipUses=net.azib.ipscan', // ipscan does not annotate itself
         ]
     }
 
