@@ -77,7 +77,8 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
                 if (matcher.find()) {
                     // mark that additional info is available
                     subject.setResultType(ResultType.WITH_PORTS);
-                    String result = matcher.group(1);
+                    @SuppressWarnings("nullness:assignment")
+                    @NonNull String result = matcher.group(1);
 
                     if (result.isEmpty()) {
                         return String.valueOf(WINBOX_PORT);

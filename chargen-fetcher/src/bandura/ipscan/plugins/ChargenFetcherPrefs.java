@@ -12,6 +12,8 @@ import net.azib.ipscan.fetchers.FetcherPrefs;
 import net.azib.ipscan.gui.AbstractModalDialog;
 import net.azib.ipscan.gui.util.LayoutHelper;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.widgets.Button;
@@ -21,7 +23,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherPrefs {
-    private ChargenFetcher fetcher;
+    private @Nullable ChargenFetcher fetcher;
 
     public ChargenFetcherPrefs() {
         super();
@@ -31,24 +33,18 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
     @Override
     public void openFor(Fetcher fetcher) {
         if (!(fetcher instanceof ChargenFetcher)) {
-            throw new IllegalArgumentException(
-                    String.format(
-                            "%s: %s", Labels.getLabel("text.fetcher.chargenFetcher.invalidFetcher"),
-                            fetcher.getClass().getName()
-                    )
-            );
+            throw new IllegalArgumentException(String.format("Invalid fetcher: %s", fetcher.getClass().getName()));
         }
         this.fetcher = (ChargenFetcher) fetcher;
         open();
     }
 
     @Override
+    @RequiresNonNull({"fetcher"})
+    @SuppressWarnings("nullness:dereference.of.nullable")
     protected void populateShell() {
-        if (fetcher == null) {
-            throw new IllegalArgumentException(Labels.getLabel("text.fetcher.chargenFetcher.fetcherIsNull"));
-        }
-
         shell = new Shell(Display.getCurrent().getActiveShell(), SWT.DIALOG_TRIM);
+
         shell.setText(fetcher.getName());
         shell.setLayout(LayoutHelper.formLayout(10, 10, 5));
 

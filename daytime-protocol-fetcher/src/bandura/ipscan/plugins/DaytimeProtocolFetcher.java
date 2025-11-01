@@ -5,10 +5,11 @@
 package bandura.ipscan.plugins;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.NonNull;
 
 import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.fetchers.PortTextFetcher;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Fetcher, which retrieves the daytime.

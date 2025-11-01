@@ -5,8 +5,6 @@
 package bandura.ipscan.plugins;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +24,9 @@ import net.azib.ipscan.core.ScanningResult.ResultType;
 import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 /**
  * Fetcher, which retrieves the current time from the target via the time
  * protocol.
@@ -34,7 +35,6 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     private static final int TIME_PORT = 37;
     private static final Logger LOG = LoggerFactory.getLogger();
 
-    @NonNull
     private static byte[] readTimeBytesFromInputStream(@NonNull InputStream is) throws IOException {
         byte[] time1 = is.readNBytes(4);
 
@@ -56,8 +56,7 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     }
 
     @CheckReturnValue
-    @NonNull
-    private static long rfc868BytesToRfc868Timestamp(@NonNull byte[] time) {
+    private static long rfc868BytesToRfc868Timestamp(byte[] time) {
         if (time.length == 4) {
             return Integer.toUnsignedLong(ByteBuffer.wrap(time).getInt());
         } else {
@@ -66,7 +65,6 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     }
 
     @CheckReturnValue
-    @NonNull
     private static long rfc868TimestampToUnixTimestamp(long rfc868timestamp) {
         return rfc868timestamp - 2208988800L;
     }
@@ -78,16 +76,16 @@ public class TimeProtocolFetcher extends AbstractFetcher {
         this.scannerConfig = scannerConfig;
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public String getId() {
         return "fetcher.timeProtocolFetcher";
     }
 
+    @Override
     @CheckReturnValue
     @Nullable
-    @Override
     public Object scan(@NonNull ScanningSubject subject) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), TIME_PORT), subject.getAdaptedPortTimeout());
