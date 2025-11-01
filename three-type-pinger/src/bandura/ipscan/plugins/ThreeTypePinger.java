@@ -26,15 +26,6 @@ public class ThreeTypePinger extends AbstractPinger {
 
     public ThreeTypePinger(@NonNull JavaPinger javaPinger, @NonNull TCPPinger tcpPinger, @NonNull UDPPinger udpPinger) {
         super();
-        if (javaPinger == null) {
-            throw new IllegalArgumentException("Java pinger is null");
-        }
-        if (tcpPinger == null) {
-            throw new IllegalArgumentException("TCP pinger is null");
-        }
-        if (udpPinger == null) {
-            throw new IllegalArgumentException("UDP pinger is null");
-        }
         this.javaPinger = javaPinger;
         this.udpPinger = udpPinger;
         this.tcpPinger = tcpPinger;
@@ -51,12 +42,6 @@ public class ThreeTypePinger extends AbstractPinger {
     @NonNull
     // @Override
     public PingResult ping(@NonNull ScanningSubject subject, int count) throws IOException {
-        if (subject == null) {
-            throw new IllegalArgumentException("Subject is null");
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Count is negative");
-        }
         // try Java Build-in first - as it could use ICMP
         // minimum three tries to prevent packet loss in unreliable networks
         int javaBuiltinInitialCount = Math.max(3, count / 3);

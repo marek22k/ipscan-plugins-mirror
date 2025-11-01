@@ -36,9 +36,6 @@ public class TimeProtocolFetcher extends AbstractFetcher {
 
     @NonNull
     private static byte[] readTimeBytesFromInputStream(@NonNull InputStream is) throws IOException {
-        if (is == null) {
-            throw new IllegalArgumentException("Input stream is null");
-        }
         byte[] time1 = is.readNBytes(4);
 
         if (time1.length < 4) {
@@ -61,12 +58,6 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     @CheckReturnValue
     @NonNull
     private static long rfc868BytesToRfc868Timestamp(@NonNull byte[] time) {
-        if (time == null) {
-            throw new IllegalArgumentException("Time is null");
-        }
-        if (time.length != 4 && time.length != 8) {
-            throw new IllegalArgumentException(String.format("Invalid time response length: %d", time.length));
-        }
         if (time.length == 4) {
             return Integer.toUnsignedLong(ByteBuffer.wrap(time).getInt());
         } else {
@@ -98,10 +89,6 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     @Nullable
     @Override
     public Object scan(@NonNull ScanningSubject subject) {
-        if (subject == null) {
-            throw new IllegalArgumentException("");
-        }
-
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), TIME_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);

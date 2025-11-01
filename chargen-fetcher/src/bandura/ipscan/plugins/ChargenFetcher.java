@@ -39,9 +39,6 @@ public class ChargenFetcher extends AbstractFetcher {
     @CheckReturnValue
     @NonNull
     private static String getRFCPattern(int no) {
-        if (no < 0) {
-            throw new IllegalArgumentException(String.format("Number is negative: %d", no));
-        }
         int start = no % (RFC_PATTERN_CHARACTERS.length() + 1);
         int end = Math.min(start + 72, RFC_PATTERN_CHARACTERS.length());
         int missingCharacters = 72 - (end - start);
@@ -60,9 +57,6 @@ public class ChargenFetcher extends AbstractFetcher {
 
     public ChargenFetcher(@NonNull ScannerConfig scannerConfig) {
         super();
-        if (scannerConfig == null) {
-            throw new IllegalArgumentException("Scanner config is null");
-        }
         this.scannerConfig = scannerConfig;
         this.linesToCheckAdditionally = 2;
     }
@@ -91,9 +85,6 @@ public class ChargenFetcher extends AbstractFetcher {
     @Nullable
     @Override
     public Object scan(@NonNull ScanningSubject subject) {
-        if (subject == null) {
-            throw new IllegalArgumentException("Subject is null");
-        }
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), CHARGEN_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);

@@ -18,6 +18,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -44,9 +45,6 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
 
     public MikrotikRouterOSVersionFetcher(@NonNull ScannerConfig scannerConfig) {
         super();
-        if (scannerConfig == null) {
-            throw new IllegalArgumentException("Scanner config is null");
-        }
         this.scannerConfig = scannerConfig;
     }
 
@@ -61,9 +59,6 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     @Nullable
     @Override
     public Object scan(@NonNull ScanningSubject subject) {
-        if (subject == null) {
-            throw new IllegalArgumentException("Subject is null");
-        }
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), WINBOX_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
