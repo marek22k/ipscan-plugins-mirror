@@ -26,6 +26,7 @@ import net.azib.ipscan.core.ScanningResult.ResultType;
 import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 import net.azib.ipscan.fetchers.FetcherPrefs;
+import net.azib.ipscan.config.Labels;
 
 /**
  * Fetcher that checks whether the a Chargen is running and working.
@@ -97,7 +98,7 @@ public class ChargenFetcher extends AbstractFetcher {
             );
             String line = in.readLine();
             if (line == null || line.isBlank()) {
-                return "False";
+                return Labels.getLabel("text.fetcher.chargenFetcher.false");
             } else {
                 subject.setResultType(ResultType.WITH_PORTS);
 
@@ -107,13 +108,12 @@ public class ChargenFetcher extends AbstractFetcher {
                         String expectedResponse = getRFCPattern(numberOfLines);
                         String response = in.readLine();
                         if (response == null || !response.equals(expectedResponse)) {
-                            return "True (partial RFC pattern, " + (numberOfLines + 1) + "/"
-                                    + (linesToCheckAdditionally + 1) + ")";
+                            return String.format("%s (%s, %d/%d)", Labels.getLabel("text.fetcher.chargenFetcher.true"), Labels.getLabel("text.fetcher.chargenFetcher.partialRFCPattern"), (numberOfLines + 1), (linesToCheckAdditionally + 1));
                         }
                     }
-                    return "True (RFC pattern)";
+                    return String.format("%s (%s)", Labels.getLabel("text.fetcher.chargenFetcher.true"), Labels.getLabel("text.fetcher.chargenFetcher.RFCPattern"));
                 } else {
-                    return "True (non-RFC pattern)";
+                    return String.format("%s (%s)", Labels.getLabel("text.fetcher.chargenFetcher.true"), Labels.getLabel("text.fetcher.chargenFetcher.nonRFCPattern"));
                 }
             }
         } catch (ConnectException e) {

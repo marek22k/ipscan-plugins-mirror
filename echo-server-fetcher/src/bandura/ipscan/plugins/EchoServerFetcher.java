@@ -24,6 +24,7 @@ import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.core.ScanningResult.ResultType;
 import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
+import net.azib.ipscan.config.Labels;
 
 /**
  * Fetcher that checks whether the Echo Server is working.
@@ -159,9 +160,9 @@ public class EchoServerFetcher extends AbstractFetcher {
 
             if (firstMismatch == -1 /* no mismatch */) {
                 subject.setResultType(ResultType.WITH_PORTS);
-                return "True";
+                return Labels.getLabel("text.fetcher.echoServerFetcher.true");
             } else {
-                return String.format("False (%d)", firstMismatch);
+                return String.format("%s (%d)", Labels.getLabel("text.fetcher.echoServerFetcher.false"), firstMismatch);
             }
         } catch (ConnectException e) {
             // no connection
