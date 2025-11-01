@@ -18,12 +18,23 @@ steps:
     image: codeberg.org/mark22k/ci:latest
     pull: true
     commands:
-      - ./gradlew properties
-      - VERSION=$(./gradlew properties --quiet | grep "^version:" | cut -d' ' -f2)
+      - export PATH="$HOME/.local/bin:$PATH"
+      - update-alternatives --set java /usr/lib/jvm/temurin-17-jdk-amd64/bin/java
+      - update-alternatives --set javac /usr/lib/jvm/temurin-17-jdk-amd64/bin/javac
       - mkdir -p libs
-      - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
-      - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
+      - cd ..
+      - git clone --depth 1 --branch patched https://github.com/marek22k/ipscan.git
+      - cd ipscan
+      - git tag 3.9.2SVN
+      - ./gradlew any
+      - cp "build/libs/ipscan-any-3.9.2SVN.jar" "../ipscan-plugins/libs/ipscan-any-3.9.2.jar"
+      - cd "../ipscan-plugins"
+      - VERSION=$(./gradlew properties --quiet | grep "^version:" | cut -d' ' -f2)
+      # - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
+      # - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
       - make check
+      - make reuse-lint
+      - make lizard
       - ./gradlew proguardedJar -PskipCheckerFramework
       - |
         for PLUGIN in ssh-banner-fetcher mikrotik-routeros-version-fetcher echo-server-fetcher time-protocol-fetcher daytime-protocol-fetcher chargen-fetcher dns-server-fetcher three-way-pinger
