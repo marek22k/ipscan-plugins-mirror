@@ -10,13 +10,14 @@ import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.fetchers.PortTextFetcher;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.regex.qual.Regex;
 
 /**
  * Fetcher, which retrieves the SSH banner
  */
 public class SSHBannerFetcher extends PortTextFetcher {
     private static final int SSH_PORT = 22;
-    private static final @NonNull String REGEX = "^(.*)$";
+    private static final @Regex(1) @NonNull String REGEX = "^(.*)$";
 
     public SSHBannerFetcher(ScannerConfig scannerConfig) {
         super(scannerConfig, SSH_PORT, "", REGEX);

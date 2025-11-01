@@ -29,6 +29,7 @@ import net.azib.ipscan.fetchers.AbstractFetcher;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.regex.qual.Regex;
 
 /**
  * Fetcher, which retrieves the Mikrotik RouterOS version via the WinBox API
@@ -38,7 +39,7 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     private static final byte[] PAYLOAD = new byte[] {(byte) 0x12, (byte) 0x02, (byte) 'l', (byte) 'i', (byte) 's',
             (byte) 't', (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x80, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
-    private static final @NonNull Pattern REGEX = Pattern.compile(" version: \"([0-9.]+)\" ");
+    private static final @Regex(1) @NonNull Pattern REGEX = Pattern.compile(" version: \"([0-9.]+)\" ");
     private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
     private @NonNull ScannerConfig scannerConfig;

@@ -10,13 +10,14 @@ import net.azib.ipscan.config.ScannerConfig;
 import net.azib.ipscan.fetchers.PortTextFetcher;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.regex.qual.Regex;
 
 /**
  * Fetcher, which retrieves the daytime.
  */
 public class DaytimeProtocolFetcher extends PortTextFetcher {
     private static final int DAYTIME_PORT = 13;
-    private static final @NonNull String REGEX = "^(.*)$";
+    private static final @Regex(1) @NonNull String REGEX = "^(.*)$";
 
     public DaytimeProtocolFetcher(@NonNull ScannerConfig scannerConfig) {
         super(scannerConfig, DAYTIME_PORT, "", REGEX);

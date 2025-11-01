@@ -100,16 +100,10 @@ subprojects {
     checkerFramework {
         checkers = [
             'org.checkerframework.checker.nullness.NullnessChecker',
-            // 'org.checkerframework.checker.initialization.InitializationChecker',
-            // 'org.checkerframework.checker.interning.InterningChecker',
-            // 'org.checkerframework.checker.resourceleak.ResourceLeakChecker',
-            // 'org.checkerframework.checker.tainting.TaintingChecker',
-            // 'org.checkerframework.checker.regex.RegexChecker',
-            // 'org.checkerframework.checker.formatter.FormatterChecker',
-            // 'org.checkerframework.checker.i18n.I18nChecker',
-            // 'org.checkerframework.checker.signature.SignatureChecker',
-            // 'org.checkerframework.checker.guieffect.GuiEffectChecker',
-            // 'org.checkerframework.framework.util.PurityChecker',
+            'org.checkerframework.checker.interning.InterningChecker',
+            'org.checkerframework.checker.resourceleak.ResourceLeakChecker',
+            'org.checkerframework.checker.regex.RegexChecker',
+            'org.checkerframework.checker.formatter.FormatterChecker',
             'org.checkerframework.common.value.ValueChecker',
             'org.checkerframework.common.initializedfields.InitializedFieldsChecker'
         ]
