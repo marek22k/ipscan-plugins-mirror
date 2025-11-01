@@ -59,6 +59,7 @@ public class ChargenFetcher extends AbstractFetcher {
     private int linesToCheckAdditionally;
 
     public ChargenFetcher(@NonNull ScannerConfig scannerConfig) {
+        super();
         if (scannerConfig == null) {
             throw new IllegalArgumentException("Scanner config is null");
         }

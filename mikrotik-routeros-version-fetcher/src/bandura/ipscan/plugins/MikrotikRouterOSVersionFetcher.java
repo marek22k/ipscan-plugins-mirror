@@ -43,6 +43,7 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     private ScannerConfig scannerConfig;
 
     public MikrotikRouterOSVersionFetcher(@NonNull ScannerConfig scannerConfig) {
+        super();
         if (scannerConfig == null) {
             throw new IllegalArgumentException("Scanner config is null");
         }

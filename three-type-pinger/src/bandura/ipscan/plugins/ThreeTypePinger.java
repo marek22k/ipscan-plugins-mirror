@@ -25,6 +25,7 @@ public class ThreeTypePinger extends AbstractPinger {
     private TCPPinger tcpPinger;
 
     public ThreeTypePinger(@NonNull JavaPinger javaPinger, @NonNull TCPPinger tcpPinger, @NonNull UDPPinger udpPinger) {
+        super();
         if (javaPinger == null) {
             throw new IllegalArgumentException("Java pinger is null");
         }

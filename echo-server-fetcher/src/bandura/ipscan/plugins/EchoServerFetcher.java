@@ -131,6 +131,7 @@ public class EchoServerFetcher extends AbstractFetcher {
     private ScannerConfig scannerConfig;
 
     public EchoServerFetcher(@NonNull ScannerConfig scannerConfig) {
+        super();
         if (scannerConfig == null) {
             throw new IllegalArgumentException("Scanner config is null");
         }

@@ -83,6 +83,7 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     private ScannerConfig scannerConfig;
 
     public TimeProtocolFetcher(@NonNull ScannerConfig scannerConfig) {
+        super();
         this.scannerConfig = scannerConfig;
     }
 
