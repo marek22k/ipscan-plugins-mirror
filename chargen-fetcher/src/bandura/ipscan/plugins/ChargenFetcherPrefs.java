@@ -39,9 +39,9 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
         open();
     }
 
+    @SuppressWarnings("nullness:dereference.of.nullable")
     @Override
     @RequiresNonNull({"fetcher"})
-    @SuppressWarnings("nullness:dereference.of.nullable")
     protected void populateShell() {
         shell = new Shell(Display.getCurrent().getActiveShell(), SWT.DIALOG_TRIM);
 

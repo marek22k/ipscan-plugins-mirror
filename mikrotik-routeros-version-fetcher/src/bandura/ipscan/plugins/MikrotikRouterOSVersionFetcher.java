@@ -5,8 +5,6 @@
 package bandura.ipscan.plugins;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,6 +27,9 @@ import net.azib.ipscan.core.ScanningResult.ResultType;
 import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 /**
  * Fetcher, which retrieves the Mikrotik RouterOS version via the WinBox API
  */
@@ -47,16 +48,17 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
         this.scannerConfig = scannerConfig;
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public String getId() {
         return "fetcher.mikrotikRouterOSVersionFetcher";
     }
 
+    @SuppressWarnings("nullness:dereference.of.nullable")
+    @Override
     @CheckReturnValue
     @Nullable
-    @Override
     public Object scan(@NonNull ScanningSubject subject) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), WINBOX_PORT), subject.getAdaptedPortTimeout());
@@ -77,8 +79,7 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
                 if (matcher.find()) {
                     // mark that additional info is available
                     subject.setResultType(ResultType.WITH_PORTS);
-                    @SuppressWarnings("nullness:assignment")
-                    @NonNull String result = matcher.group(1);
+                    @SuppressWarnings("nullness:assignment") String result = matcher.group(1);
 
                     if (result.isEmpty()) {
                         return String.valueOf(WINBOX_PORT);

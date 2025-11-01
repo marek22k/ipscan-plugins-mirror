@@ -5,8 +5,6 @@
 package bandura.ipscan.plugins;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,6 +25,9 @@ import net.azib.ipscan.core.ScanningResult.ResultType;
 import net.azib.ipscan.core.ScanningSubject;
 import net.azib.ipscan.fetchers.AbstractFetcher;
 import net.azib.ipscan.fetchers.FetcherPrefs;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Fetcher that checks whether the a Chargen is running and working.
@@ -61,29 +62,28 @@ public class ChargenFetcher extends AbstractFetcher {
         this.linesToCheckAdditionally = 2;
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public String getId() {
         return "fetcher.chargenFetcher";
     }
 
     @CheckReturnValue
-    @NonNull
     public int getLinesToCheckAdditionally() {
         return this.linesToCheckAdditionally;
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public Class<? extends FetcherPrefs> getPreferencesClass() {
         return ChargenFetcherPrefs.class;
     }
 
+    @Override
     @CheckReturnValue
     @Nullable
-    @Override
     public Object scan(@NonNull ScanningSubject subject) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), CHARGEN_PORT), subject.getAdaptedPortTimeout());
