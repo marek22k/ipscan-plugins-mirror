@@ -16,7 +16,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public class SSHBannerFetcher extends PortTextFetcher {
     private static final int SSH_PORT = 22;
-    private static final String REGEX = "^(.*)$";
+    private static final @NonNull String REGEX = "^(.*)$";
 
     public SSHBannerFetcher(ScannerConfig scannerConfig) {
         super(scannerConfig, SSH_PORT, "", REGEX);

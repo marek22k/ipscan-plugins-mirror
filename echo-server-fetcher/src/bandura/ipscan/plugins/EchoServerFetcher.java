@@ -127,25 +127,25 @@ public class EchoServerFetcher extends AbstractFetcher {
             (byte) 0x6c, (byte) 0x36, (byte) 0x69, (byte) 0x36, (byte) 0x21, (byte) 0x34, (byte) 0x31, (byte) 0x34,
             (byte) 0x30, (byte) 0x37, (byte) 0x33, (byte) 0x37, (byte) 0x34, (byte) 0x38, (byte) 0x38, (byte) 0x33,
             (byte) 0x35, (byte) 0x35, (byte) 0x33, (byte) 0x32, (byte) 0x38};
-    private static final Logger LOG = LoggerFactory.getLogger();
+    private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
-    private ScannerConfig scannerConfig;
+    private @NonNull ScannerConfig scannerConfig;
 
     public EchoServerFetcher(@NonNull ScannerConfig scannerConfig) {
         super();
         this.scannerConfig = scannerConfig;
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public String getId() {
         return "fetcher.echoServerFetcher";
     }
 
+    @Override
     @CheckReturnValue
     @Nullable
-    @Override
     public Object scan(@NonNull ScanningSubject subject) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), ECHO_PORT), subject.getAdaptedPortTimeout());

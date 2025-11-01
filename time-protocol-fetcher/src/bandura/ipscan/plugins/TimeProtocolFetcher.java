@@ -33,7 +33,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public class TimeProtocolFetcher extends AbstractFetcher {
     private static final int TIME_PORT = 37;
-    private static final Logger LOG = LoggerFactory.getLogger();
+    private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
     private static byte[] readTimeBytesFromInputStream(@NonNull InputStream is) throws IOException {
         byte[] time1 = is.readNBytes(4);

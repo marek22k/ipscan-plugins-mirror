@@ -114,8 +114,7 @@ subprojects {
             // 'org.checkerframework.common.initializedfields.InitializedFieldsChecker'
         ]
         extraJavacArgs = [
-            '-AskipUses=net.azib.ipscan',  // Ignoriert Angry IP Scanner-Klassen
-            '-AuseDefaultsForUncheckedCode=source'  // Nur eigenen Code checken
+            '-AskipUses=net.azib.ipscan',
         ]
     }
 

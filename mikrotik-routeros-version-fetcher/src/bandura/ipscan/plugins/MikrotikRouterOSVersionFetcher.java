@@ -38,10 +38,10 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     private static final byte[] PAYLOAD = new byte[] {(byte) 0x12, (byte) 0x02, (byte) 'l', (byte) 'i', (byte) 's',
             (byte) 't', (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x80, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
-    private static final Pattern REGEX = Pattern.compile(" version: \"([0-9.]+)\" ");
-    private static final Logger LOG = LoggerFactory.getLogger();
+    private static final @NonNull Pattern REGEX = Pattern.compile(" version: \"([0-9.]+)\" ");
+    private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
-    private ScannerConfig scannerConfig;
+    private @NonNull ScannerConfig scannerConfig;
 
     public MikrotikRouterOSVersionFetcher(@NonNull ScannerConfig scannerConfig) {
         super();

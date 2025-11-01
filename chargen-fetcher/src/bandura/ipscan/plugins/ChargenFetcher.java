@@ -34,8 +34,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public class ChargenFetcher extends AbstractFetcher {
     private static final int CHARGEN_PORT = 19;
-    private static final Logger LOG = LoggerFactory.getLogger();
-    private static final String RFC_PATTERN_CHARACTERS = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
+    private static final @NonNull Logger LOG = LoggerFactory.getLogger();
+    private static final @NonNull String RFC_PATTERN_CHARACTERS = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
     @CheckReturnValue
     @NonNull

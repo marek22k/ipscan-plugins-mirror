@@ -16,15 +16,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public class DaytimeProtocolFetcher extends PortTextFetcher {
     private static final int DAYTIME_PORT = 13;
-    private static final String REGEX = "^(.*)$";
+    private static final @NonNull String REGEX = "^(.*)$";
 
     public DaytimeProtocolFetcher(@NonNull ScannerConfig scannerConfig) {
         super(scannerConfig, DAYTIME_PORT, "", REGEX);
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public String getId() {
         return "fetcher.daytimeProtocolFetcher";
     }

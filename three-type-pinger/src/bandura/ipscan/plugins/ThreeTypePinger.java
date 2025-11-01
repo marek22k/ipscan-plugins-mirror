@@ -21,9 +21,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * Pinger, which combines Java build-in pinger, UDP Pinger and TCP Pinger
  */
 public class ThreeTypePinger extends AbstractPinger {
-    private JavaPinger javaPinger;
-    private UDPPinger udpPinger;
-    private TCPPinger tcpPinger;
+    private @NonNull JavaPinger javaPinger;
+    private @NonNull UDPPinger udpPinger;
+    private @NonNull TCPPinger tcpPinger;
 
     public ThreeTypePinger(@NonNull JavaPinger javaPinger, @NonNull TCPPinger tcpPinger, @NonNull UDPPinger udpPinger) {
         super();
@@ -32,16 +32,16 @@ public class ThreeTypePinger extends AbstractPinger {
         this.tcpPinger = tcpPinger;
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public String getId() {
         return "pinger.threeTypePinger";
     }
 
+    @Override
     @CheckReturnValue
     @NonNull
-    @Override
     public PingResult ping(@NonNull ScanningSubject subject, int count) throws IOException {
         // try Java Build-in first - as it could use ICMP
         // minimum three tries to prevent packet loss in unreliable networks
