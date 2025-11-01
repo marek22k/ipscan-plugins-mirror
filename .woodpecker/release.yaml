@@ -23,7 +23,8 @@ steps:
       - mkdir -p libs
       - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
       - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
-      - make
+      - make check
+      - ./gradlew proguardedJar -PskipCheckerFramework
       - |
         for PLUGIN in ssh-banner-fetcher mikrotik-routeros-version-fetcher echo-server-fetcher time-protocol-fetcher daytime-protocol-fetcher chargen-fetcher three-way-pinger
         do

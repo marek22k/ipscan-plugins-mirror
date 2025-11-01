@@ -113,6 +113,7 @@ subprojects {
         ]
         extraJavacArgs = [
             '-AskipUses=net.azib.ipscan', // ipscan does not annotate itself
+            '-Alint'
         ]
     }
 
@@ -200,4 +201,6 @@ subprojects {
         from proguardedJar.outputs.files
         into "${System.getProperty('user.home')}/.ipscan"
     }
+
+    check.dependsOn lizard, reuseLint
 }
