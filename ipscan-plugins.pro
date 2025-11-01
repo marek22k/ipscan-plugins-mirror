@@ -32,7 +32,6 @@
 -dontwarn org.slf4j.**
 -dontwarn sun.net.spi.nameservice.**
 -dontwarn android.**
--dontwarn javax.naming.**
 
 -assumenosideeffects public class java.lang.System {
     public static long currentTimeMillis();
