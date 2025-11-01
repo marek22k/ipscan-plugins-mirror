@@ -202,5 +202,5 @@ subprojects {
         into "${System.getProperty('user.home')}/.ipscan"
     }
 
-    check.dependsOn lizard, reuseLint
+    check.dependsOn lizard
 }

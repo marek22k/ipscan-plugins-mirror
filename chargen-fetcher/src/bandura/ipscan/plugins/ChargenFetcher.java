@@ -35,8 +35,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public class ChargenFetcher extends AbstractFetcher {
     private static final int CHARGEN_PORT = 19;
-    private static final @NonNull Logger LOG = LoggerFactory.getLogger();
+    private static final int DEFAULT_LINES_TO_CHECK_ADDITIONALLY = 2;
     private static final @NonNull String RFC_PATTERN_CHARACTERS = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
+    private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
     @CheckReturnValue
     @NonNull
@@ -60,7 +61,7 @@ public class ChargenFetcher extends AbstractFetcher {
     public ChargenFetcher(@NonNull ScannerConfig scannerConfig) {
         super();
         this.scannerConfig = scannerConfig;
-        this.linesToCheckAdditionally = 2;
+        this.linesToCheckAdditionally = DEFAULT_LINES_TO_CHECK_ADDITIONALLY;
     }
 
     @Override
