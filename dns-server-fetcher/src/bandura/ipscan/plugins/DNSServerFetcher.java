@@ -30,7 +30,7 @@ import net.azib.ipscan.fetchers.AbstractFetcher;
 /**
  * Fetcher that checks if a and which DNS server is running.
  */
-public class DnsServerFetcher extends AbstractFetcher {
+public class DNSServerFetcher extends AbstractFetcher {
     private static final int DNS_PORT = 53;
     private static final String[] versions_records = {"version.bind.", "version.server.", "authors.bind.",
             "hostname.bind.", "id.server."};
@@ -38,7 +38,7 @@ public class DnsServerFetcher extends AbstractFetcher {
 
     private @NonNull ScannerConfig scannerConfig;
 
-    public DnsServerFetcher(@NonNull ScannerConfig scannerConfig) {
+    public DNSServerFetcher(@NonNull ScannerConfig scannerConfig) {
         super();
         this.scannerConfig = scannerConfig;
     }
