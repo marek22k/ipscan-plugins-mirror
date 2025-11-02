@@ -32,8 +32,8 @@ jobs:
         cd ipscan
         git tag 3.9.2SVN
         ./gradlew any
-        cp "build/libs/ipscan-any-3.9.2SVN.jar" "../ipscan-plugins/libs/ipscan-any-3.9.2.jar"
-        cd "../ipscan-plugins"
+        cp "build/libs/ipscan-any-3.9.2SVN.jar" "../ipscan-plugins-mirror/libs/ipscan-any-3.9.2.jar"
+        cd "../ipscan-plugins-mirror"
         ./gradlew properties
 
     - name: Check with Gradle Wrapper
