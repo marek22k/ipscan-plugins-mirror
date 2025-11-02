@@ -87,8 +87,9 @@ subprojects {
 
     pmd {
         consoleOutput = true
-        toolVersion = '7.8.0'
+        toolVersion = '7.18.0'
         ruleSetFiles = files 'pmd.xml'
+        ignoreFailures = false
     }
 
     spotbugs {
