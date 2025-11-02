@@ -21,11 +21,13 @@ import net.azib.ipscan.core.net.UDPPinger;
  * Pinger, which combines Java build-in pinger, UDP Pinger and TCP Pinger
  */
 public class ThreeTypePinger extends AbstractPinger {
-    private @NonNull JavaPinger javaPinger;
-    private @NonNull UDPPinger udpPinger;
-    private @NonNull TCPPinger tcpPinger;
+    private final @NonNull JavaPinger javaPinger;
+    private final @NonNull UDPPinger udpPinger;
+    private final @NonNull TCPPinger tcpPinger;
 
-    public ThreeTypePinger(@NonNull JavaPinger javaPinger, @NonNull TCPPinger tcpPinger, @NonNull UDPPinger udpPinger) {
+    public ThreeTypePinger(
+            final @NonNull JavaPinger javaPinger, final @NonNull TCPPinger tcpPinger, final @NonNull UDPPinger udpPinger
+    ) {
         super();
         this.javaPinger = javaPinger;
         this.udpPinger = udpPinger;
@@ -42,19 +44,19 @@ public class ThreeTypePinger extends AbstractPinger {
     @Override
     @CheckReturnValue
     @NonNull
-    public PingResult ping(@NonNull ScanningSubject subject, int count) throws IOException {
+    public PingResult ping(final @NonNull ScanningSubject subject, final int count) throws IOException {
         // try Java Build-in first - as it could use ICMP
         // minimum three tries to prevent packet loss in unreliable networks
-        int javaBuiltinInitialCount = Math.max(3, count / 3);
-        PingResult javaBuiltinResult = this.javaPinger.ping(subject, javaBuiltinInitialCount);
+        final int javaBuiltinInitialCount = Math.max(3, count / 3);
+        final PingResult javaBuiltinResult = this.javaPinger.ping(subject, javaBuiltinInitialCount);
         if (javaBuiltinResult.isAlive()) {
             return javaBuiltinResult.merge(javaPinger.ping(subject, count - javaBuiltinInitialCount));
         }
 
         // try UDP second - it should be more reliable than TCP, but less than ICMP
         // minimum three tries to prevent packet loss in unreliable networks
-        int udpCountInitialCount = Math.max(3, count / 3);
-        PingResult udpResult = udpPinger.ping(subject, udpCountInitialCount);
+        final int udpCountInitialCount = Math.max(3, count / 3);
+        final PingResult udpResult = udpPinger.ping(subject, udpCountInitialCount);
         if (udpResult.isAlive()) {
             return udpResult.merge(udpPinger.ping(subject, count - udpCountInitialCount));
         }

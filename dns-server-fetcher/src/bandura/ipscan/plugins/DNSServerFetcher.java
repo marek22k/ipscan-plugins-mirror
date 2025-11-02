@@ -32,13 +32,13 @@ import net.azib.ipscan.fetchers.AbstractFetcher;
  */
 public class DNSServerFetcher extends AbstractFetcher {
     private static final int DNS_PORT = 53;
-    private static final String[] versions_records = {"version.bind.", "version.server.", "authors.bind.",
+    private static final String[] VERSION_RECORDS = {"version.bind.", "version.server.", "authors.bind.",
             "hostname.bind.", "id.server."};
     private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
-    private @NonNull ScannerConfig scannerConfig;
+    private final @NonNull ScannerConfig scannerConfig;
 
-    public DNSServerFetcher(@NonNull ScannerConfig scannerConfig) {
+    public DNSServerFetcher(final @NonNull ScannerConfig scannerConfig) {
         super();
         this.scannerConfig = scannerConfig;
     }
@@ -53,25 +53,25 @@ public class DNSServerFetcher extends AbstractFetcher {
     @Override
     @CheckReturnValue
     @Nullable
-    public Object scan(@NonNull ScanningSubject subject) {
-        Resolver r = new SimpleResolver(subject.getAddress());
+    public Object scan(final @NonNull ScanningSubject subject) {
+        final Resolver r = new SimpleResolver(subject.getAddress());
         r.setPort(DNS_PORT);
         r.setTCP(true);
-        r.setTimeout(Duration.ofMillis(((long) scannerConfig.portTimeout) * 2L));
+        r.setTimeout(Duration.ofMillis(scannerConfig.portTimeout * 2L));
 
-        for (String version_record : versions_records) {
+        for (final String versionRecord : VERSION_RECORDS) {
             try {
-                Lookup l = new Lookup(version_record, Type.TXT, DClass.CH);
+                final Lookup l = new Lookup(versionRecord, Type.TXT, DClass.CH);
                 l.setResolver(r);
                 l.run();
-                int status = l.getResult();
+                final int status = l.getResult();
                 if (status == Lookup.HOST_NOT_FOUND || status == Lookup.SUCCESSFUL || status == Lookup.TYPE_NOT_FOUND) {
                     subject.setResultType(ResultType.WITH_PORTS);
                 }
                 if (status == Lookup.SUCCESSFUL) {
-                    Record[] answers = l.getAnswers();
+                    final Record[] answers = l.getAnswers();
                     if (answers.length > 0) {
-                        String server = answers[0].rdataToString();
+                        final String server = answers[0].rdataToString();
                         if (server.length() >= 2 && server.startsWith("\"") && server.endsWith("\"")) {
                             return server.substring(1, server.length() - 1);
                         }
@@ -79,7 +79,7 @@ public class DNSServerFetcher extends AbstractFetcher {
                     }
                 }
             } catch (TextParseException e) {
-                LOG.log(Level.WARNING, version_record, e);
+                LOG.log(Level.WARNING, versionRecord, e);
             }
         }
 

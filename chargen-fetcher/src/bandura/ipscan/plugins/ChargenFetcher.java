@@ -13,7 +13,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -41,10 +40,10 @@ public class ChargenFetcher extends AbstractFetcher {
 
     @CheckReturnValue
     @NonNull
-    private static String getRFCPattern(@NonNegative int no) {
-        int start = no % (RFC_PATTERN_CHARACTERS.length() + 1);
-        int end = Math.min(start + 72, RFC_PATTERN_CHARACTERS.length());
-        int missingCharacters = 72 - (end - start);
+    private static String getRFCPattern(final @NonNegative int no) {
+        final int start = no % (RFC_PATTERN_CHARACTERS.length() + 1);
+        final int end = Math.min(start + 72, RFC_PATTERN_CHARACTERS.length());
+        final int missingCharacters = 72 - (end - start);
 
         String result = RFC_PATTERN_CHARACTERS.substring(start, end);
 
@@ -55,10 +54,10 @@ public class ChargenFetcher extends AbstractFetcher {
         return result;
     }
 
-    private ScannerConfig scannerConfig;
+    private final ScannerConfig scannerConfig;
     private int linesToCheckAdditionally;
 
-    public ChargenFetcher(@NonNull ScannerConfig scannerConfig) {
+    public ChargenFetcher(final @NonNull ScannerConfig scannerConfig) {
         super();
         this.scannerConfig = scannerConfig;
         this.linesToCheckAdditionally = DEFAULT_LINES_TO_CHECK_ADDITIONALLY;
@@ -86,17 +85,17 @@ public class ChargenFetcher extends AbstractFetcher {
     @Override
     @CheckReturnValue
     @Nullable
-    public Object scan(@NonNull ScanningSubject subject) {
+    public Object scan(final @NonNull ScanningSubject subject) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), CHARGEN_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
             socket.setSoTimeout(scannerConfig.portTimeout * 2);
             socket.setSoLinger(true, 0);
 
-            BufferedReader in = new BufferedReader(
+            final BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream(), StandardCharsets.ISO_8859_1)
             );
-            String line = in.readLine();
+            final String line = in.readLine();
             if (line == null || line.isBlank()) {
                 return Labels.getLabel("text.fetcher.chargenFetcher.false");
             } else {
@@ -104,14 +103,14 @@ public class ChargenFetcher extends AbstractFetcher {
 
                 if (line.equals(getRFCPattern(0))) {
                     for (int no = 0; no < linesToCheckAdditionally; no++) {
-                        int numberOfLines = no + 1; // including 0
-                        String expectedResponse = getRFCPattern(numberOfLines);
-                        String response = in.readLine();
+                        final int numberOfLines = no + 1; // including 0
+                        final String expectedResponse = getRFCPattern(numberOfLines);
+                        final String response = in.readLine();
                         if (response == null || !response.equals(expectedResponse)) {
                             return String.format(
                                     "%s (%s, %d/%d)", Labels.getLabel("text.fetcher.chargenFetcher.true"),
-                                    Labels.getLabel("text.fetcher.chargenFetcher.partialRFCPattern"),
-                                    (numberOfLines + 1), (linesToCheckAdditionally + 1)
+                                    Labels.getLabel("text.fetcher.chargenFetcher.partialRFCPattern"), numberOfLines + 1,
+                                    linesToCheckAdditionally + 1
                             );
                         }
                     }
@@ -126,19 +125,15 @@ public class ChargenFetcher extends AbstractFetcher {
                     );
                 }
             }
-        } catch (ConnectException e) {
-            // no connection
-        } catch (SocketTimeoutException e) {
-            // no information
-        } catch (SocketException e) {
-            // connection reset
+        } catch (SocketTimeoutException | SocketException e) {
+            // no open port
         } catch (IOException e) {
-            LOG.log(Level.FINE, subject.getAddress().toString(), e);
+            LOG.log(Level.FINE, () -> String.format("%s: %s", subject.getAddress().toString(), e.getStackTrace()));
         }
         return null;
     }
 
-    public void setLinesToCheckAdditionally(int linesToCheckAdditionally) {
+    public void setLinesToCheckAdditionally(final int linesToCheckAdditionally) {
         if (linesToCheckAdditionally < 0) {
             throw new IllegalArgumentException(
                     String.format("Number of lines is negative: %d", linesToCheckAdditionally)

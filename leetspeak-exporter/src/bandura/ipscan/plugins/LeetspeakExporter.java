@@ -13,8 +13,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 import net.azib.ipscan.config.Labels;
 import net.azib.ipscan.config.Version;
@@ -40,7 +41,7 @@ public class LeetspeakExporter extends TXTExporter {
 
     @Override
     @SuppressWarnings("required.method.not.called")
-    public void start(OutputStream outputStream, String feederInfo) throws IOException {
+    public void start(final @NonNull OutputStream outputStream, final @NonNull String feederInfo) throws IOException {
         output = new PrintWriter(
                 new LeetspeakFilterWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))
         );
@@ -56,7 +57,7 @@ public class LeetspeakExporter extends TXTExporter {
             output.print(Labels.getLabel("exporter.txt.scanned"));
             output.print(' ');
             output.println(feederInfo);
-            output.println(DateFormat.getDateTimeInstance().format(new Date()));
+            output.println(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
             output.println();
         }
     }

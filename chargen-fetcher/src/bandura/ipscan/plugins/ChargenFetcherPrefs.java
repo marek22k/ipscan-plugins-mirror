@@ -33,7 +33,7 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
     }
 
     @Override
-    public void openFor(Fetcher fetcher) {
+    public void openFor(final Fetcher fetcher) {
         if (!(fetcher instanceof ChargenFetcher)) {
             throw new IllegalArgumentException(String.format("Invalid fetcher: %s", fetcher.getClass().getName()));
         }
@@ -45,18 +45,18 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
     @Override
     @RequiresNonNull({"fetcher"})
     protected void populateShell() {
-        Display display = Objects.requireNonNull(Display.getCurrent(), "Display.getCurrent()");
-        Shell activeShell = Objects.requireNonNull(display.getActiveShell(), "display.getActiveShell()");
+        final Display display = Objects.requireNonNull(Display.getCurrent(), "Display.getCurrent()");
+        final Shell activeShell = Objects.requireNonNull(display.getActiveShell(), "display.getActiveShell()");
 
         shell = new Shell(activeShell, SWT.DIALOG_TRIM);
 
         shell.setText(fetcher.getName());
         shell.setLayout(LayoutHelper.formLayout(10, 10, 5));
 
-        Label linesLabel = new Label(shell, SWT.NONE);
+        final Label linesLabel = new Label(shell, SWT.NONE);
         linesLabel.setText(Labels.getLabel("text.fetcher.chargenFetcher.linesToCheckAdditionally"));
 
-        Text linesText = new Text(shell, SWT.BORDER);
+        final Text linesText = new Text(shell, SWT.BORDER);
         linesText.setText(String.valueOf(fetcher.getLinesToCheckAdditionally()));
 
         linesText.setLayoutData(
@@ -67,18 +67,18 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
         // .setLayoutData(LayoutHelper.formData(new FormAttachment(0), null, new
         // FormAttachment(linesText), null));
 
-        Button okButton = new Button(shell, SWT.NONE);
+        final Button okButton = new Button(shell, SWT.NONE);
         okButton.setText(Labels.getLabel("button.OK"));
 
-        Button cancelButton = new Button(shell, SWT.NONE);
+        final Button cancelButton = new Button(shell, SWT.NONE);
         cancelButton.setText(Labels.getLabel("button.cancel"));
 
         positionButtonsInFormLayout(okButton, cancelButton, linesText);
 
         okButton.addListener(SWT.Selection, e -> {
-            Preferences prefs = fetcher.getPreferences();
+            final Preferences prefs = fetcher.getPreferences();
 
-            int lines = Integer.parseInt(linesText.getText());
+            final int lines = Integer.parseInt(linesText.getText());
             if (lines < 0) {
                 throw new IllegalArgumentException(
                         String.format("%s: %d", Labels.getLabel("exception.fetcher.chargenFetcher.noIsNegative"), lines)
