@@ -42,7 +42,7 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     private static final @Regex(1) @NonNull Pattern REGEX = Pattern.compile(" version: \"([0-9.]+)\" ");
     private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
-    private @NonNull ScannerConfig scannerConfig;
+    private final @NonNull ScannerConfig scannerConfig;
 
     public MikrotikRouterOSVersionFetcher(@NonNull ScannerConfig scannerConfig) {
         super();
@@ -61,22 +61,22 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     @CheckReturnValue
     @Nullable
     public Object scan(@NonNull ScanningSubject subject) {
-        try (Socket socket = new Socket()) {
+        try (final Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), WINBOX_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
             socket.setSoTimeout(scannerConfig.portTimeout * 2);
             socket.setSoLinger(true, 0);
 
-            OutputStream os = socket.getOutputStream();
+            final OutputStream os = socket.getOutputStream();
             os.write(PAYLOAD);
             os.flush();
 
-            BufferedReader in = new BufferedReader(
+            final BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream(), StandardCharsets.ISO_8859_1)
             );
             String line;
             while ((line = in.readLine()) != null) {
-                Matcher matcher = REGEX.matcher(line);
+                final Matcher matcher = REGEX.matcher(line);
                 if (matcher.find()) {
                     // mark that additional info is available
                     subject.setResultType(ResultType.WITH_PORTS);

@@ -15,19 +15,19 @@ import java.io.Writer;
 class LeetspeakFilterWriter extends FilterWriter {
     private boolean leetspeakSwitch;
 
-    public LeetspeakFilterWriter(@NonNull Writer out) {
+    public LeetspeakFilterWriter(final @NonNull Writer out) {
         super(out);
         leetspeakSwitch = true;
     }
 
     @Override
-    public void write(@NonNull String str, int off, int len) throws IOException {
+    public void write(final @NonNull String str, final int off, final int len) throws IOException {
         write(str.toCharArray(), off, len);
     }
 
     @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
-        char[] characters = new char[len];
+    public void write(final char[] cbuf, final int off, final int len) throws IOException {
+        final char[] characters = new char[len];
         for (int index = 0; index < len; index++) {
             characters[index] = toLeetspeak(cbuf[off + index]);
         }
@@ -35,12 +35,12 @@ class LeetspeakFilterWriter extends FilterWriter {
     }
 
     @Override
-    public void write(int c) throws IOException {
+    public void write(final int c) throws IOException {
         super.write(toLeetspeak((char) c));
     }
 
     @CheckReturnValue
-    private char toLeetspeak(char c) {
+    private char toLeetspeak(final char c) {
         leetspeakSwitch = !leetspeakSwitch;
 
         if (!leetspeakSwitch) {

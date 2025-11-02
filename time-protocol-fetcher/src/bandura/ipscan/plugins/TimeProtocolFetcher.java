@@ -35,8 +35,8 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     private static final int TIME_PORT = 37;
     private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
-    private static byte[] readTimeBytesFromInputStream(@NonNull InputStream is) throws IOException {
-        byte[] time1 = is.readNBytes(4);
+    private static byte[] readTimeBytesFromInputStream(final @NonNull InputStream is) throws IOException {
+        final byte[] time1 = is.readNBytes(4);
 
         if (time1.length < 4) {
             return time1;
@@ -56,7 +56,7 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     }
 
     @CheckReturnValue
-    private static long rfc868BytesToRfc868Timestamp(byte[] time) {
+    private static long rfc868BytesToRfc868Timestamp(final byte[] time) {
         if (time.length == 4) {
             return Integer.toUnsignedLong(ByteBuffer.wrap(time).getInt());
         } else {
@@ -65,13 +65,13 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     }
 
     @CheckReturnValue
-    private static long rfc868TimestampToUnixTimestamp(long rfc868timestamp) {
+    private static long rfc868TimestampToUnixTimestamp(final long rfc868timestamp) {
         return rfc868timestamp - 2208988800L;
     }
 
     private ScannerConfig scannerConfig;
 
-    public TimeProtocolFetcher(@NonNull ScannerConfig scannerConfig) {
+    public TimeProtocolFetcher(final @NonNull ScannerConfig scannerConfig) {
         super();
         this.scannerConfig = scannerConfig;
     }
@@ -86,8 +86,8 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     @Override
     @CheckReturnValue
     @Nullable
-    public Object scan(@NonNull ScanningSubject subject) {
-        try (Socket socket = new Socket()) {
+    public Object scan(final @NonNull ScanningSubject subject) {
+        try (final Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), TIME_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
             socket.setSoTimeout(scannerConfig.portTimeout * 2);

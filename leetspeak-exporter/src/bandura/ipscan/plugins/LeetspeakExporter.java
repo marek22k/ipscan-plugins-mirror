@@ -40,7 +40,7 @@ public class LeetspeakExporter extends TXTExporter {
 
     @Override
     @SuppressWarnings("required.method.not.called")
-    public void start(OutputStream outputStream, String feederInfo) throws IOException {
+    public void start(final @NonNull OutputStream outputStream, final @NonNull String feederInfo) throws IOException {
         output = new PrintWriter(
                 new LeetspeakFilterWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))
         );

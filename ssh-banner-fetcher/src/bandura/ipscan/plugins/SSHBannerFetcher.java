@@ -19,7 +19,7 @@ public class SSHBannerFetcher extends PortTextFetcher {
     private static final int SSH_PORT = 22;
     private static final @Regex(1) @NonNull String REGEX = "^(.*)$";
 
-    public SSHBannerFetcher(ScannerConfig scannerConfig) {
+    public SSHBannerFetcher(final ScannerConfig scannerConfig) {
         super(scannerConfig, SSH_PORT, "", REGEX);
     }
 

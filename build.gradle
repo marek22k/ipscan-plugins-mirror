@@ -25,6 +25,7 @@ dependencyUpdates {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'pmd'
     apply plugin: 'org.gradlex.reproducible-builds'
     apply plugin: 'io.github.sgtsilvio.gradle.proguard'
     apply plugin: 'com.diffplug.spotless'
@@ -88,7 +89,7 @@ subprojects {
     pmd {
         consoleOutput = true
         toolVersion = '7.18.0'
-        ruleSetFiles = files 'pmd.xml'
+        ruleSetFiles = files "${rootProject.projectDir}/pmd.xml"
         ignoreFailures = false
     }
 
