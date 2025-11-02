@@ -57,7 +57,7 @@ public class DNSServerFetcher extends AbstractFetcher {
         Resolver r = new SimpleResolver(subject.getAddress());
         r.setPort(DNS_PORT);
         r.setTCP(true);
-        r.setTimeout(Duration.ofMillis(scannerConfig.portTimeout * 2));
+        r.setTimeout(Duration.ofMillis(((long) scannerConfig.portTimeout) * 2L));
 
         for (String version_record : versions_records) {
             try {
