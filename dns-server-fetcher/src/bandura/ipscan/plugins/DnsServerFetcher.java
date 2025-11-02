@@ -9,6 +9,7 @@ import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,7 +57,7 @@ public class DnsServerFetcher extends AbstractFetcher {
         Resolver r = new SimpleResolver(subject.getAddress());
         r.setPort(DNS_PORT);
         r.setTCP(true);
-        r.setTimeout(scannerConfig.portTimeout * 2);
+        r.setTimeout(Duration.ofSeconds(scannerConfig.portTimeout * 2));
 
         for (String version_record : versions_records) {
             try {
