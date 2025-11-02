@@ -6,6 +6,7 @@ package bandura.ipscan.plugins;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 
+import org.checkerframework.checker.index.qual.Positive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class ThreeTypePinger extends AbstractPinger {
     @Override
     @CheckReturnValue
     @NonNull
-    public PingResult ping(final @NonNull ScanningSubject subject, final int count) throws IOException {
+    public PingResult ping(final @NonNull ScanningSubject subject, final @Positive int count) throws IOException {
         // try Java Build-in first - as it could use ICMP
         // minimum three tries to prevent packet loss in unreliable networks
         final int javaBuiltinInitialCount = Math.max(3, count / 3);
