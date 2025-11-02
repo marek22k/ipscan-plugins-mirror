@@ -11,7 +11,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -166,14 +165,10 @@ public class EchoServerFetcher extends AbstractFetcher {
             } else {
                 return String.format("%s (%d)", Labels.getLabel("text.fetcher.echoServerFetcher.false"), firstMismatch);
             }
-        } catch (ConnectException e) {
-            // no connection
-        } catch (SocketTimeoutException e) {
-            // no information
-        } catch (SocketException e) {
-            // connection reset
+        } catch (SocketTimeoutException | SocketException e) {
+            // no open port
         } catch (IOException e) {
-            LOG.log(Level.FINE, subject.getAddress().toString(), e);
+            LOG.log(Level.FINE, () -> String.format("%s: %s", subject.getAddress().toString(), e.getStackTrace()));
         }
         return null;
     }

@@ -14,7 +14,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -36,15 +35,15 @@ import net.azib.ipscan.fetchers.AbstractFetcher;
  */
 public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     private static final int WINBOX_PORT = 8291;
-    private static final byte[] PAYLOAD = new byte[] {(byte) 0x12, (byte) 0x02, (byte) 'l', (byte) 'i', (byte) 's',
-            (byte) 't', (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-            (byte) 0x00, (byte) 0x00, (byte) 0x80, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
+    private static final byte[] PAYLOAD = {(byte) 0x12, (byte) 0x02, (byte) 'l', (byte) 'i', (byte) 's', (byte) 't',
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            (byte) 0x00, (byte) 0x80, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
     private static final @Regex(1) @NonNull Pattern REGEX = Pattern.compile(" version: \"([0-9.]+)\" ");
     private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
     private final @NonNull ScannerConfig scannerConfig;
 
-    public MikrotikRouterOSVersionFetcher(@NonNull ScannerConfig scannerConfig) {
+    public MikrotikRouterOSVersionFetcher(final @NonNull ScannerConfig scannerConfig) {
         super();
         this.scannerConfig = scannerConfig;
     }
@@ -60,7 +59,7 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
     @Override
     @CheckReturnValue
     @Nullable
-    public Object scan(@NonNull ScanningSubject subject) {
+    public Object scan(final @NonNull ScanningSubject subject) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), WINBOX_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
@@ -75,12 +74,17 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
                     new InputStreamReader(socket.getInputStream(), StandardCharsets.ISO_8859_1)
             );
             String line;
-            while ((line = in.readLine()) != null) {
+            while (true) {
+                line = in.readLine();
+                if (line == null) {
+                    break;
+                }
+
                 final Matcher matcher = REGEX.matcher(line);
                 if (matcher.find()) {
                     // mark that additional info is available
                     subject.setResultType(ResultType.WITH_PORTS);
-                    @SuppressWarnings("nullness:assignment") String result = matcher.group(1);
+                    @SuppressWarnings("nullness:assignment") final String result = matcher.group(1);
 
                     if (result.isEmpty()) {
                         return String.valueOf(WINBOX_PORT);
@@ -89,14 +93,10 @@ public class MikrotikRouterOSVersionFetcher extends AbstractFetcher {
                     }
                 }
             }
-        } catch (ConnectException e) {
-            // no connection
-        } catch (SocketTimeoutException e) {
-            // no information
-        } catch (SocketException e) {
-            // connection reset
+        } catch (SocketTimeoutException | SocketException e) {
+            // no open port
         } catch (IOException e) {
-            LOG.log(Level.FINE, subject.getAddress().toString(), e);
+            LOG.log(Level.FINE, () -> String.format("%s: %s", subject.getAddress().toString(), e.getStackTrace()));
         }
         return null;
     }

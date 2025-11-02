@@ -76,9 +76,9 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
         positionButtonsInFormLayout(okButton, cancelButton, linesText);
 
         okButton.addListener(SWT.Selection, e -> {
-            Preferences prefs = fetcher.getPreferences();
+            final Preferences prefs = fetcher.getPreferences();
 
-            int lines = Integer.parseInt(linesText.getText());
+            final int lines = Integer.parseInt(linesText.getText());
             if (lines < 0) {
                 throw new IllegalArgumentException(
                         String.format("%s: %d", Labels.getLabel("exception.fetcher.chargenFetcher.noIsNegative"), lines)

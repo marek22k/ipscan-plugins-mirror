@@ -11,7 +11,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -42,10 +41,10 @@ public class TimeProtocolFetcher extends AbstractFetcher {
             return time1;
         }
 
-        byte[] time2 = is.readNBytes(4);
+        final byte[] time2 = is.readNBytes(4);
         if (time2.length == 4) {
             /* eight bytes read */
-            byte[] result = new byte[8];
+            final byte[] result = new byte[8];
             System.arraycopy(time1, 0, result, 0, 4);
             System.arraycopy(time2, 0, result, 4, 4);
             return result;
@@ -66,10 +65,10 @@ public class TimeProtocolFetcher extends AbstractFetcher {
 
     @CheckReturnValue
     private static long rfc868TimestampToUnixTimestamp(final long rfc868timestamp) {
-        return rfc868timestamp - 2208988800L;
+        return rfc868timestamp - 2_208_988_800L;
     }
 
-    private ScannerConfig scannerConfig;
+    private final @NonNull ScannerConfig scannerConfig;
 
     public TimeProtocolFetcher(final @NonNull ScannerConfig scannerConfig) {
         super();
@@ -87,18 +86,18 @@ public class TimeProtocolFetcher extends AbstractFetcher {
     @CheckReturnValue
     @Nullable
     public Object scan(final @NonNull ScanningSubject subject) {
-        try (final Socket socket = new Socket()) {
+        try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), TIME_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
             socket.setSoTimeout(scannerConfig.portTimeout * 2);
             socket.setSoLinger(true, 0);
 
-            byte[] timeResponse = readTimeBytesFromInputStream(socket.getInputStream());
+            final byte[] timeResponse = readTimeBytesFromInputStream(socket.getInputStream());
             switch (timeResponse.length) {
                 case 4, 8: {
                     subject.setResultType(ResultType.WITH_PORTS);
 
-                    long timestamp = rfc868TimestampToUnixTimestamp(rfc868BytesToRfc868Timestamp(timeResponse));
+                    final long timestamp = rfc868TimestampToUnixTimestamp(rfc868BytesToRfc868Timestamp(timeResponse));
 
                     if (timestamp < Instant.MIN.getEpochSecond() || timestamp > Instant.MAX.getEpochSecond()) {
                         return null;
@@ -111,14 +110,10 @@ public class TimeProtocolFetcher extends AbstractFetcher {
                     return null;
                 }
             }
-        } catch (ConnectException e) {
-            // no connection
-        } catch (SocketTimeoutException e) {
-            // no information
-        } catch (SocketException e) {
-            // connection reset
+        } catch (SocketTimeoutException | SocketException e) {
+            // no open port
         } catch (IOException e) {
-            LOG.log(Level.FINE, subject.getAddress().toString(), e);
+            LOG.log(Level.FINE, () -> String.format("%s: %s", subject.getAddress().toString(), e.getStackTrace()));
         }
         return null;
     }

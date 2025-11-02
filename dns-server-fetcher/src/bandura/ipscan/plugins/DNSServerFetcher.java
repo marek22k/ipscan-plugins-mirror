@@ -32,7 +32,7 @@ import net.azib.ipscan.fetchers.AbstractFetcher;
  */
 public class DNSServerFetcher extends AbstractFetcher {
     private static final int DNS_PORT = 53;
-    private static final String[] versionsRecords = {"version.bind.", "version.server.", "authors.bind.",
+    private static final String[] VERSION_RECORDS = {"version.bind.", "version.server.", "authors.bind.",
             "hostname.bind.", "id.server."};
     private static final @NonNull Logger LOG = LoggerFactory.getLogger();
 
@@ -59,7 +59,7 @@ public class DNSServerFetcher extends AbstractFetcher {
         r.setTCP(true);
         r.setTimeout(Duration.ofMillis(scannerConfig.portTimeout * 2L));
 
-        for (final String versionRecord : versionsRecords) {
+        for (final String versionRecord : VERSION_RECORDS) {
             try {
                 final Lookup l = new Lookup(versionRecord, Type.TXT, DClass.CH);
                 l.setResolver(r);

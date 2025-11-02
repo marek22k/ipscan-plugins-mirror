@@ -13,7 +13,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -110,8 +109,8 @@ public class ChargenFetcher extends AbstractFetcher {
                         if (response == null || !response.equals(expectedResponse)) {
                             return String.format(
                                     "%s (%s, %d/%d)", Labels.getLabel("text.fetcher.chargenFetcher.true"),
-                                    Labels.getLabel("text.fetcher.chargenFetcher.partialRFCPattern"),
-                                    (numberOfLines + 1), (linesToCheckAdditionally + 1)
+                                    Labels.getLabel("text.fetcher.chargenFetcher.partialRFCPattern"), numberOfLines + 1,
+                                    linesToCheckAdditionally + 1
                             );
                         }
                     }
@@ -126,14 +125,10 @@ public class ChargenFetcher extends AbstractFetcher {
                     );
                 }
             }
-        } catch (ConnectException e) {
-            // no connection
-        } catch (SocketTimeoutException e) {
-            // no information
-        } catch (SocketException e) {
-            // connection reset
+        } catch (SocketTimeoutException | SocketException e) {
+            // no open port
         } catch (IOException e) {
-            LOG.log(Level.FINE, subject.getAddress().toString(), e);
+            LOG.log(Level.FINE, () -> String.format("%s: %s", subject.getAddress().toString(), e.getStackTrace()));
         }
         return null;
     }
