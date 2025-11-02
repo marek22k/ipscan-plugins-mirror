@@ -4,4 +4,4 @@
 
 rootProject.name = 'banduras-ipscan-plugins'
 
-include 'ssh-banner-fetcher', 'mikrotik-routeros-version-fetcher', 'echo-server-fetcher', 'time-protocol-fetcher', 'daytime-protocol-fetcher', 'chargen-fetcher', 'dns-server-fetcher', 'three-type-pinger'
+include 'ssh-banner-fetcher', 'mikrotik-routeros-version-fetcher', 'echo-server-fetcher', 'time-protocol-fetcher', 'daytime-protocol-fetcher', 'chargen-fetcher', 'dns-server-fetcher', 'leetspeak-exporter', 'three-type-pinger'

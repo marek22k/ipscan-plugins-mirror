@@ -37,7 +37,7 @@ steps:
       - make lizard
       - ./gradlew proguardedJar -PskipCheckerFramework
       - |
-        for PLUGIN in ssh-banner-fetcher mikrotik-routeros-version-fetcher echo-server-fetcher time-protocol-fetcher daytime-protocol-fetcher chargen-fetcher dns-server-fetcher three-type-pinger
+        for PLUGIN in ssh-banner-fetcher mikrotik-routeros-version-fetcher echo-server-fetcher time-protocol-fetcher daytime-protocol-fetcher chargen-fetcher dns-server-fetcher leetspeak-exporter three-type-pinger
         do
           curl --user $CODEBERG_GIT_USERNAME:$CODEBERG_GIT_PASSWORD --upload-file "$PLUGIN/build/libs/$PLUGIN-$VERSION.jar" "https://codeberg.org/api/packages/mark22k/generic/ipscan-plugins/$VERSION/$PLUGIN-$VERSION.jar"
         done
