@@ -7,6 +7,7 @@ package bandura.ipscan.plugins;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 
+import java.util.Objects;
 import java.util.prefs.Preferences;
 
 import net.azib.ipscan.config.Labels;
@@ -44,7 +45,10 @@ public class ChargenFetcherPrefs extends AbstractModalDialog implements FetcherP
     @Override
     @RequiresNonNull({"fetcher"})
     protected void populateShell() {
-        shell = new Shell(Display.getCurrent().getActiveShell(), SWT.DIALOG_TRIM);
+        Display display = Objects.requireNonNull(Display.getCurrent(), "Display.getCurrent()");
+        Shell activeShell = Objects.requireNonNull(display.getActiveShell(), "display.getActiveShell()");
+
+        shell = new Shell(activeShell, SWT.DIALOG_TRIM);
 
         shell.setText(fetcher.getName());
         shell.setLayout(LayoutHelper.formLayout(10, 10, 5));
