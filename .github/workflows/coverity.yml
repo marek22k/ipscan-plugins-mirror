@@ -35,7 +35,7 @@ jobs:
 
     - uses: vapier/coverity-scan-action@v1
       with:
-        project: 'crazipscan-pluginsytrace'
+        project: 'ipscan-plugins'
         build_language: 'java'
         command: 'make proguardedJar'
         email: ${{ secrets.COVERITY_SCAN_EMAIL }}
