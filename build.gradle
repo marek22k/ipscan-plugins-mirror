@@ -26,8 +26,8 @@ dependencyUpdates {
 
 sonar {
     properties {
-        property "sonar.projectKey", "marek22k_ipscan-plugins-mirror"
-        property "sonar.organization", "marek22k"
+        property 'sonar.projectKey', 'marek22k_ipscan-plugins-mirror'
+        property 'sonar.organization', 'marek22k'
     }
 }
 
