@@ -48,7 +48,7 @@ public class ThreeTypePinger extends AbstractPinger {
     public PingResult ping(final @NonNull ScanningSubject subject, final @Positive int count) throws IOException {
         // try Java Build-in first - as it could use ICMP
         // minimum three tries to prevent packet loss in unreliable networks
-        final int javaBuiltinInitialCount = Math.max(3, count / 3);
+        final int javaBuiltinInitialCount = Math.max(1, count / 3);
         final PingResult javaBuiltinResult = this.javaPinger.ping(subject, javaBuiltinInitialCount);
         if (javaBuiltinResult.isAlive()) {
             return javaBuiltinResult.merge(javaPinger.ping(subject, count - javaBuiltinInitialCount));
@@ -56,7 +56,7 @@ public class ThreeTypePinger extends AbstractPinger {
 
         // try UDP second - it should be more reliable than TCP, but less than ICMP
         // minimum three tries to prevent packet loss in unreliable networks
-        final int udpCountInitialCount = Math.max(3, count / 3);
+        final int udpCountInitialCount = Math.max(1, count / 3);
         final PingResult udpResult = udpPinger.ping(subject, udpCountInitialCount);
         if (udpResult.isAlive()) {
             return udpResult.merge(udpPinger.ping(subject, count - udpCountInitialCount));
