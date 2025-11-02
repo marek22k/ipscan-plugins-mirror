@@ -147,7 +147,7 @@ public class EchoServerFetcher extends AbstractFetcher {
     @CheckReturnValue
     @Nullable
     public Object scan(final @NonNull ScanningSubject subject) {
-        try (final Socket socket = new Socket()) {
+        try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(subject.getAddress(), ECHO_PORT), subject.getAdaptedPortTimeout());
             socket.setTcpNoDelay(true);
             socket.setSoTimeout(scannerConfig.portTimeout * 2);
