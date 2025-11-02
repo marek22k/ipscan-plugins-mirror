@@ -34,6 +34,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
     	<exclude name="NPathComplexity" />
     	<exclude name="SwitchDensity" />
     	<exclude name="LawOfDemeter" />
+        <exclude name="LoosePackageCoupling" />
     </rule>
     <rule ref="category/java/design.xml/AvoidDeeplyNestedIfStmts">
         <properties>
