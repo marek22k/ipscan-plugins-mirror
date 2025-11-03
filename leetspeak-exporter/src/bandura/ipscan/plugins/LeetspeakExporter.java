@@ -29,7 +29,7 @@ public class LeetspeakExporter extends TXTExporter {
     @CheckReturnValue
     @NonNull
     public String getFilenameExtension() {
-        return "stxt";
+        return "l33t";
     }
 
     @Override
