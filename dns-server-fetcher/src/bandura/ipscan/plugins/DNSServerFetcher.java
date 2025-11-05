@@ -50,6 +50,7 @@ public class DNSServerFetcher extends AbstractFetcher {
         return "fetcher.dnsServerFetcher";
     }
 
+    @SuppressWarnings("argument")
     @Override
     @CheckReturnValue
     @Nullable
@@ -63,6 +64,7 @@ public class DNSServerFetcher extends AbstractFetcher {
             try {
                 final Lookup l = new Lookup(versionRecord, Type.TXT, DClass.CH);
                 l.setResolver(r);
+                l.setCache(null);
                 l.run();
                 final int status = l.getResult();
                 if (status == Lookup.HOST_NOT_FOUND || status == Lookup.SUCCESSFUL || status == Lookup.TYPE_NOT_FOUND) {
