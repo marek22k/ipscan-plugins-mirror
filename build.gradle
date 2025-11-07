@@ -10,11 +10,11 @@ plugins {
     id 'com.diffplug.spotless' version '8.0.0'
     id 'com.github.spotbugs' version '6.4.4'
     id 'com.github.ben-manes.versions' version '0.53.0'
-    id 'org.checkerframework' version '0.6.60'
+    id 'org.checkerframework' version '0.6.61'
     id 'org.sonarqube' version '7.0.1.6134'
 }
 
-version = '1.0.4'
+version = '1.0.6'
 
 repositories {
     mavenCentral()
@@ -50,10 +50,10 @@ subprojects {
         spotbugs 'com.github.spotbugs:spotbugs:4.9.8'
         spotbugsPlugins 'com.mebigfatguy.fb-contrib:fb-contrib:7.6.15'
 
-        checkerFramework 'org.checkerframework:checker:3.51.1'
+        checkerFramework 'org.checkerframework:checker:3.52.0'
 
         compileOnly 'com.github.spotbugs:spotbugs-annotations:4.9.8'
-        compileOnly 'org.checkerframework:checker-qual:3.51.1'
+        compileOnly 'org.checkerframework:checker-qual:3.52.0'
         compileOnly 'org.eclipse.platform:org.eclipse.swt.gtk.linux.x86_64:3.131.0'
         compileOnly files("${rootProject.projectDir}/libs/ipscan-any-3.9.2.jar")
     }
