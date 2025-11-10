@@ -47,7 +47,7 @@ subprojects {
         compileOnly 'com.github.spotbugs:spotbugs-annotations:4.9.8'
         compileOnly 'org.checkerframework:checker-qual:3.52.0'
         compileOnly 'org.eclipse.platform:org.eclipse.swt.gtk.linux.x86_64:3.131.0'
-        compileOnly files("${rootProject.projectDir}/libs/ipscan-any-3.9.2.jar")
+        compileOnly files("${rootProject.projectDir}/libs/ipscan-any-3.9.3.jar")
     }
 
     java {
