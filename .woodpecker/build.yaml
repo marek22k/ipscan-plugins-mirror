@@ -11,8 +11,8 @@ when:
 steps:
   - name: build
     environment:
-      IPSCAN_VERSION: 3.9.2
-      IPSCAN_CHECKSUM: 42c0d870d1e77df4ac70f11dcf04581a7a5d9cec60773976971d5fd5cb33bd76
+      IPSCAN_VERSION: 3.9.3
+      IPSCAN_CHECKSUM: 63a76f8fc8366432d79e62ed8b41cb0719eb469550de6e52bb3f548a80375129
 
     image: codeberg.org/mark22k/ci:latest
     pull: true
@@ -21,16 +21,9 @@ steps:
       - update-alternatives --set java /usr/lib/jvm/temurin-17-jdk-amd64/bin/java
       - update-alternatives --set javac /usr/lib/jvm/temurin-17-jdk-amd64/bin/javac
       - mkdir -p libs
-      - cd ..
-      - git clone --depth 1 --branch master https://github.com/angryip/ipscan.git
-      - cd ipscan
-      - git tag 3.9.2SVN
-      - ./gradlew any
-      - cp "build/libs/ipscan-any-3.9.2SVN.jar" "../ipscan-plugins/libs/ipscan-any-3.9.2.jar"
-      - cd "../ipscan-plugins"
+      - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
+      - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
       - ./gradlew properties
-      # - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
-      # - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
       - ./gradlew check
       - ./gradlew reuseLint
       - ./gradlew lizard
