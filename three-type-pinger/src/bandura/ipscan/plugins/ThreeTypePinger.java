@@ -12,16 +12,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 
 import net.azib.ipscan.core.ScanningSubject;
-import net.azib.ipscan.core.net.AbstractPinger;
 import net.azib.ipscan.core.net.JavaPinger;
 import net.azib.ipscan.core.net.PingResult;
+import net.azib.ipscan.core.net.Pinger;
 import net.azib.ipscan.core.net.TCPPinger;
 import net.azib.ipscan.core.net.UDPPinger;
 
 /**
  * Pinger, which combines Java build-in pinger, UDP Pinger and TCP Pinger
  */
-public class ThreeTypePinger extends AbstractPinger {
+public class ThreeTypePinger implements Pinger {
     private final @NonNull JavaPinger javaPinger;
     private final @NonNull UDPPinger udpPinger;
     private final @NonNull TCPPinger tcpPinger;

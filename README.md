@@ -6,6 +6,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # ipscan-plugins
 
+[![pipeline badge](https://ci.codeberg.org/api/badges/15474/status.svg)](https://ci.codeberg.org/repos/15474)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/11444/badge)](https://www.bestpractices.dev/projects/11444)
+
 ## Fetchers
 
 | Plugin | Output |
