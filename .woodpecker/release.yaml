@@ -8,8 +8,8 @@ when:
 steps:
   - name: release
     environment:
-      IPSCAN_VERSION: 3.9.2
-      IPSCAN_CHECKSUM: 42c0d870d1e77df4ac70f11dcf04581a7a5d9cec60773976971d5fd5cb33bd76
+      IPSCAN_VERSION: 3.9.3
+      IPSCAN_CHECKSUM: 63a76f8fc8366432d79e62ed8b41cb0719eb469550de6e52bb3f548a80375129
 
       CODEBERG_GIT_USERNAME:
         from_secret: codeberg_git_username
