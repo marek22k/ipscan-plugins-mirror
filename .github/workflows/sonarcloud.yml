@@ -20,16 +20,11 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
 
-      - name: Build ipscan
+      - name: Prepare build
         run: |
           mkdir -p libs
-          cd ..
-          git clone --depth 1 --branch patched https://github.com/marek22k/ipscan.git
-          cd ipscan
-          git tag 3.9.2SVN
-          ./gradlew any
-          cp "build/libs/ipscan-any-3.9.2SVN.jar" "../ipscan-plugins-mirror/libs/ipscan-any-3.9.2.jar"
-          cd "../ipscan-plugins-mirror"
+          wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
+          echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
           ./gradlew properties
 
       - name: Cache SonarQube Cloud packages
