@@ -22,7 +22,7 @@ steps:
       - update-alternatives --set javac /usr/lib/jvm/temurin-17-jdk-amd64/bin/javac
       - mkdir -p libs
       - cd ..
-      - git clone --depth 1 --branch patched https://github.com/marek22k/ipscan.git
+      - git clone --depth 1 --branch patched https://github.com/angryip/ipscan.git
       - cd ipscan
       - git tag 3.9.2SVN
       - ./gradlew any
