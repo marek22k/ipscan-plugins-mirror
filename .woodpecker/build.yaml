@@ -31,7 +31,7 @@ steps:
       - ./gradlew properties
       # - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
       # - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
-      - make check
-      - make reuse-lint
-      - make lizard
-      - make proguardedJar
+      - ./gradlew check
+      - ./gradlew reuseLint
+      - ./gradlew lizard
+      - ./gradlew proguardedJar

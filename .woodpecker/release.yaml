@@ -32,9 +32,10 @@ steps:
       - VERSION=$(./gradlew properties --quiet | grep "^version:" | cut -d' ' -f2)
       # - wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
       # - echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
-      - make check
-      - make reuse-lint
-      - make lizard
+      - ./gradlew check
+      - ./gradlew proguardedJar
+      - ./gradlew reuseLint
+      - ./gradlew lizard
       - ./gradlew proguardedJar -PskipCheckerFramework
       - |
         for PLUGIN in ssh-banner-fetcher mikrotik-routeros-version-fetcher echo-server-fetcher time-protocol-fetcher daytime-protocol-fetcher chargen-fetcher dns-server-fetcher leetspeak-exporter three-type-pinger
