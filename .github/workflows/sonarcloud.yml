@@ -23,8 +23,8 @@ jobs:
       - name: Prepare build
         run: |
           mkdir -p libs
-          wget --output-document "libs/ipscan-any-$IPSCAN_VERSION.jar" "https://github.com/angryip/ipscan/releases/download/$IPSCAN_VERSION/ipscan-any-$IPSCAN_VERSION.jar"
-          echo "$IPSCAN_CHECKSUM libs/ipscan-any-$IPSCAN_VERSION.jar" | sha256sum --check --status
+          wget --output-document "libs/ipscan-any-3.9.3.jar" "https://github.com/angryip/ipscan/releases/download/3.9.3/ipscan-any-3.9.3.jar"
+          echo "63a76f8fc8366432d79e62ed8b41cb0719eb469550de6e52bb3f548a80375129 libs/ipscan-any-3.9.3.jar" | sha256sum --check --status
           ./gradlew properties
 
       - name: Cache SonarQube Cloud packages
